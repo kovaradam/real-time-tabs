@@ -1,14 +1,18 @@
 <script lang="ts">
   import Navbar from '../navbar/Navbar.svelte';
   import Help from '../help/Help.svelte';
-  import MetronomeIcon from './MetronomeIcon.svelte';
-  import VolumeSlider from './VolumeSlider.svelte';
+  import MetronomeIcon from '../icons/MetronomeIcon.svelte';
+  import VolumeSlider from '../volume-slider/VolumeSlider.svelte';
+  import CountInIcon from '../icons/CountInIcon.svelte';
 
   export let toggleVisibility: () => void;
 
   let content = 'Recording tool';
   const settings = {
     isMetronomeOn: false,
+    isSoundOn: true,
+    isMicrophoneOn: false,
+    isCountInOn: false,
     bpm: 110,
     timeSignature: { upper: 4, lower: 4 },
   };
@@ -48,6 +52,18 @@
     settings.isMetronomeOn = !settings.isMetronomeOn;
   };
 
+  const toggleSound = () => {
+    settings.isSoundOn = !settings.isSoundOn;
+  };
+
+  const toggleMicrophone = () => {
+    settings.isMicrophoneOn = !settings.isMicrophoneOn;
+  };
+
+  const toggleCountIn = () => {
+    settings.isCountInOn = !settings.isCountInOn;
+  };
+
   const playButtonHandler = () => {
     setIsPlayback(true);
   };
@@ -63,6 +79,18 @@
 
   const metronomeButtonHandler = () => {
     toggleMetronome();
+  };
+
+  const soundButtonHandler = () => {
+    toggleSound();
+  };
+
+  const microphoneButtonHandler = () => {
+    toggleMicrophone();
+  };
+
+  const countINButtonHandler = () => {
+    toggleCountIn();
   };
 </script>
 
@@ -118,6 +146,10 @@
     margin: 0 5px 5px 0;
     pointer-events: none;
   }
+
+  #count-in-btn {
+    padding: 5px 10px;
+  }
 </style>
 
 <main>
@@ -147,6 +179,9 @@
 
       </button>
       <input on:keydown={e => changeBPM(e)} bind:value={settings.bpm} on:mouseover={() => (content = 'Set BPM')} />
+      <button on:click={countINButtonHandler} class="control-btn" id="count-in-btn" on:mouseover={() => (content = 'Toggle count in')}>
+        <CountInIcon isCountInOn={settings.isCountInOn} />
+      </button>
     </div>
     <div class="ts-controls right-bordered">
       <input
@@ -159,9 +194,19 @@
         on:keydown={e => changeTimeSignature(e, 'lower')}
         on:mouseover={() => (content = 'Set length of a beat')} />
     </div>
+    <div class="right-bordered">
+      <button
+        class={`fa fa-microphone${settings.isMicrophoneOn ? '' : '-slash'} control-btn`}
+        on:click={microphoneButtonHandler}
+        on:mouseover={() => (content = 'Toggle microphone')} />
+      <!-- <button
+        class={`fa fa-volume-${settings.isSoundOn ? 'up' : 'off'} control-btn`}
+        on:click={soundButtonHandler}
+        on:mouseover={() => (content = 'Toggle volume')} /> -->
+        <VolumeSlider isSoundOn={settings.isSoundOn}/>
+    </div>
     <div>
-      <button class="fa fa-volume-up control-btn" />
-      <VolumeSlider />
+      <button class="control-btn fa fa-download" on:mouseover={() => (content = 'Download recording')} />
     </div>
   </Navbar>
   <section class="contents">
