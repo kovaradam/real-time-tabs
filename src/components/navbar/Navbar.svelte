@@ -1,5 +1,10 @@
 <script lang="ts">
-  export let toggleVisibility: () => void;
+  import {appState} from '../../stores'
+import { AppState } from '../../utils/enums'
+
+  const closeButtonHandler = () => {
+    appState.set(AppState.HOME)
+  }
 </script>
 
 <style>
@@ -39,5 +44,5 @@
   <div class="controls-container">
     <slot />
   </div>
-  <i class="fa fa-close" on:click={toggleVisibility} />
+  <i class="fa fa-close" on:click={closeButtonHandler} />
 </section>

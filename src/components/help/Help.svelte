@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let content: string;
+  import { helpContent } from '../../stores/help-content';
 </script>
 
 <style>
@@ -9,7 +9,7 @@
     transition: all 200ms;
     font-size: 0.9em;
     margin: 5px 10px;
-}
+  }
 
   div {
     position: absolute;
@@ -17,10 +17,8 @@
     bottom: 0;
     border-top-right-radius: 15px;
   }
-
-
 </style>
 
 <div id="help">
-    <p>{content}</p>
+  <p>{$helpContent}</p>
 </div>

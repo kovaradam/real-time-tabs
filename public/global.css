@@ -114,8 +114,22 @@ button:focus {
 }
 
 .control-btn:disabled {
-  color:rgb(212, 209, 209);
+  color: rgb(212, 209, 209);
   pointer-events: none;
   cursor: default;
 }
 
+.navbar-input {
+  margin: 0 10px 0 5px;
+  border: none;
+  background-color: var(--main-pink);
+  caret-color: white;
+  width: 50px;
+  padding: 4px;
+  color: rgba(255, 255, 255, 0.664);
+  text-align: center;
+}
+
+.navbar-input:focus {
+  outline-color: transparent;
+}

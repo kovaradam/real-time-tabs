@@ -1,12 +1,13 @@
 <script lang="ts">
-  const name = 'REAL TIME TABS';
+  import { appState } from '../../stores';
+  import { AppState } from '../../utils/enums';
 
-  export let toggleVisibility: () => void;
+  const name = 'REAL TIME TABS';
 
   const uploadClickHandler = () => {};
 
   const recordClickHandler = () => {
-    toggleVisibility();
+    appState.set(AppState.RECORDER);
   };
 </script>
 

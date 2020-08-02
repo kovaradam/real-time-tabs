@@ -1,13 +1,14 @@
 <script lang="ts">
   import WelcomeCard from '../welcome-card/WelcomeCard.svelte';
-  import MainContainer from '../recorder/Recorder.svelte';
+  import Recorder from '../recorder/Recorder.svelte';
+  import { appState } from '../../stores';
+  import { AppState } from '../../utils/enums';
 
-  let isWelcomeCardHidden = true;
   const welcomeMessage = 'The easiest way to create guitar tabs!';
 
-  const toggleWelcomeCardVisibility = () => {
-    isWelcomeCardHidden = !isWelcomeCardHidden;
-  };
+  $: onMainPage = $appState === AppState.HOME || $appState === AppState.LANDING;
+  $: onRecorderPage = $appState === AppState.RECORDER;
+
 </script>
 
 <style>
@@ -21,17 +22,17 @@
     text-align: center;
     font-weight: 300;
     font-size: 1.5em;
-    transition: all 20ms;
+    animation: fade-in 1600ms forwards;
   }
 
-  .mainContainerRollDown {
-    animation: container-roll-down 600ms forwards;
+  .recorder {
+    animation: recorder-roll-down 600ms forwards;
   }
-  .welcomeCardRollDown {
+  .home {
     animation: card-roll-down 600ms forwards;
   }
 
-  @keyframes container-roll-down {
+  @keyframes recorder-roll-down {
     0% {
       height: var(--welcome-card-height);
     }
@@ -48,6 +49,7 @@
       width: var(--recorder-container-width);
     }
   }
+
   @keyframes card-roll-down {
     0% {
       height: var(--recorder-container-height);
@@ -66,16 +68,26 @@
       width: var(--welcome-card-width);
     }
   }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 </style>
 
-
-<main class={'main-container ' + (isWelcomeCardHidden ? 'mainContainerRollDown' : 'welcomeCardRollDown')}>
-  {#if !isWelcomeCardHidden}
-    <WelcomeCard toggleVisibility={toggleWelcomeCardVisibility} />
+<main class={`main-container ${$appState}`}>
+  {#if onMainPage}
+    <WelcomeCard/>
+  {:else if onRecorderPage}
+    <Recorder/>
   {:else}
-    <MainContainer toggleVisibility={toggleWelcomeCardVisibility} />
+  <div></div>  
   {/if}
 </main>
-{#if !isWelcomeCardHidden}
+{#if onMainPage}
   <p>{welcomeMessage}</p>
 {/if}

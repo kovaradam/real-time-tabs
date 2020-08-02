@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let isMetronomeOn: boolean;
+  import { recorderSettings } from '../../stores';
 </script>
 
 <style>
@@ -14,7 +14,7 @@
   div:hover {
     flex-direction: row-reverse;
   }
-  
+
   .metronome-on {
     border: solid rgba(255, 255, 255, 0.623);
     border-width: 0 0 1px 0;
@@ -23,7 +23,7 @@
   }
 </style>
 
-<div class={isMetronomeOn && 'metronome-on'}>
+<div class={$recorderSettings.isMetronomeOn && 'metronome-on'}>
   <i class="fa fa-circle" />
   <i class="fa fa-circle-o" />
 </div>
