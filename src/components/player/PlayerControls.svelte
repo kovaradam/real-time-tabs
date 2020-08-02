@@ -1,35 +1,33 @@
 <script lang="ts">
-  import { recorderState, helpContent } from '../../../../stores';
-  import { setIsPlayback, setIsRecording } from '../../../../stores/recorder';
-
+  import { playerState, helpContent } from '../../stores';
+  import { audioStart, audioStop } from '../../audio/player';
+  
   const playButtonHandler = () => {
-    setIsPlayback(true);
+    $playerState.isPlayback = true;
+    audioStart();
   };
 
   const recordButtonHandler = () => {
-    setIsRecording(true);
+    $playerState.isRecording = true;
   };
 
   const stopButtonHandler = () => {
-    setIsRecording(false);
-    setIsPlayback(false);
+    $playerState.isRecording = false;
+    $playerState.isPlayback = false;
+    audioStop();
   };
 </script>
 
-<style>
-
-</style>
-
 <button
   class={'fa fa-play control-btn'}
-  style={$recorderState.isPlayback && 'color: #4bff4bb8'}
-  disabled={$recorderState.isRecording}
+  style={$playerState.isPlayback && 'color: #4bff4bb8'}
+  disabled={$playerState.isRecording}
   on:mouseover={() => helpContent.set('Play')}
   on:click={playButtonHandler} />
 <button class="fa fa-stop control-btn" on:click={stopButtonHandler} on:mouseover={() => helpContent.set('Stop')} />
 <button
   class="fa fa-circle control-btn"
-  style={$recorderState.isRecording && 'color: #ff7373'}
-  disabled={$recorderState.isPlayback}
+  style={$playerState.isRecording && 'color: #ff7373'}
+  disabled={$playerState.isPlayback}
   on:click={recordButtonHandler}
   on:mouseover={() => helpContent.set('Record')} />

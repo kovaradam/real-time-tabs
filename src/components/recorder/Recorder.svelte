@@ -1,11 +1,11 @@
 <script lang="ts">
   import Navbar from '../navbar/Navbar.svelte';
   import Help from '../help/Help.svelte';
-  import PlayerControls from './controls/player/PlayerControls.svelte';
-  import SoundControls from './controls/sound/SoundControls.svelte';
-  import { helpContent } from '../../stores';
-  import MetronomeControls from './controls/metronome/MetronomeControls.svelte';
-  import TimeSignatureControls from './controls/time-signature/TimeSignatureControls.svelte';
+  import PlayerControls from '../player/PlayerControls.svelte';
+  import SoundControls from '../player/SoundControls.svelte';
+  import { helpContent, playerState } from '../../stores';
+  import MetronomeControls from './controls/MetronomeControls.svelte';
+  import TimeSignatureControls from './controls/TimeSignatureControls.svelte';
 
   helpContent.set('Recording tool');
 </script>
@@ -57,7 +57,7 @@
     </div>
   </Navbar>
   <section class="contents">
-    <p>Recorder</p>
+    <p>{$playerState.isPlayback ? 'Sound test...' : 'Recorder'}</p>
   </section>
   <Help />
 </main>

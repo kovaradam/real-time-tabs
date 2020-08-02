@@ -1,15 +1,29 @@
 <script lang="ts">
-  import { helpContent, recorderSettings  } from '../../../../stores';
-  import { toggleSound, toggleMicrophone } from '../../../../stores/recorder';
+  import { helpContent, recorderSettings } from '../../stores';
+  import { playerSettings } from '../../stores/player';
+  import { audioSetVolume } from '../../audio/player';
+  import { connectMicrophone, disconnectMicrophone } from '../../audio/microphone';
 
   const soundButtonHandler = () => {
-    toggleSound();
+    $playerSettings.isSoundOn = !$playerSettings.isSoundOn;
+    const volume = $playerSettings.isSoundOn ? $playerSettings.volume : 0;
+    audioSetVolume(volume);
     setSoundButtonHelpContent();
   };
 
   const microphoneButtonHandler = () => {
-    toggleMicrophone();
+    $recorderSettings.isMicrophoneOn = !$recorderSettings.isMicrophoneOn;
+    if ($recorderSettings.isMicrophoneOn) {
+      connectMicrophone();
+    } else {
+      disconnectMicrophone();
+    }
     setMicrophoneButtonHelpContent();
+  };
+
+  const volumeSliderInputHandler = () => {
+    audioSetVolume($playerSettings.volume);
+    setVolumeSliderHelpContent();
   };
 
   const setMicrophoneButtonHelpContent = () => {
@@ -17,11 +31,11 @@
   };
 
   const setSoundButtonHelpContent = () => {
-    helpContent.set(`Toggle sound: ${$recorderSettings.isSoundOn ? 'on' : 'off'}`);
+    helpContent.set(`Toggle sound: ${$playerSettings.isSoundOn ? 'on' : 'off'}`);
   };
-  
-  const setSliderHelpContent = () => {
-    helpContent.set(`Adjust volume: ${$recorderSettings.volume}%`);
+
+  const setVolumeSliderHelpContent = () => {
+    helpContent.set(`Adjust volume: ${$playerSettings.volume}%`);
   };
 </script>
 
@@ -77,12 +91,12 @@
 </style>
 
 <button
-      class={`fa fa-microphone${$recorderSettings.isMicrophoneOn ? '' : '-slash'} control-btn`}
-      on:click={microphoneButtonHandler}
-      on:mouseover={setMicrophoneButtonHelpContent} />
+  class={`fa fa-microphone${$recorderSettings.isMicrophoneOn ? '' : '-slash'} control-btn`}
+  on:click={microphoneButtonHandler}
+  on:mouseover={setMicrophoneButtonHelpContent} />
 <div>
   <button
-    class={`fa fa-volume-${$recorderSettings.isSoundOn ? 'up' : 'off'} control-btn`}
+    class={`fa fa-volume-${$playerSettings.isSoundOn ? 'up' : 'off'} control-btn`}
     on:mouseover={setSoundButtonHelpContent}
     on:click={soundButtonHandler} />
   <input
@@ -90,9 +104,8 @@
     min="1"
     max="100"
     class="volume-slider"
-    bind:value={$recorderSettings.volume}
-    disabled={!$recorderSettings.isSoundOn}
-    on:mouseover={setSliderHelpContent} 
-    on:input={setSliderHelpContent} 
-    />
+    bind:value={$playerSettings.volume}
+    disabled={!$playerSettings.isSoundOn}
+    on:mouseover={setVolumeSliderHelpContent}
+    on:input={volumeSliderInputHandler} />
 </div>

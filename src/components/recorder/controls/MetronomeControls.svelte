@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { toggleMetronome, changeBPM, recorderSettings, toggleCountIn } from '../../../../stores/recorder';
-  import { helpContent } from '../../../../stores';
-  import MetronomeIcon from '../../../icons/MetronomeIcon.svelte';
-  import CountInIcon from '../../../icons/CountInIcon.svelte';
+  import { toggleMetronome, setBPMState, recorderSettings, toggleCountIn } from '../../../stores/recorder';
+  import { helpContent } from '../../../stores';
+  import MetronomeIcon from '../../icons/MetronomeIcon.svelte';
+  import CountInIcon from '../../icons/CountInIcon.svelte';
 
   const metronomeButtonHandler = () => {
     toggleMetronome();
@@ -39,7 +39,7 @@
 </button>
 <input
   class="navbar-input"
-  on:keydown={e => changeBPM(e)}
+  on:keydown={e => setBPMState(e)}
   bind:value={$recorderSettings.bpm}
   on:mouseover={() => helpContent.set('Set BPM')} />
 <button

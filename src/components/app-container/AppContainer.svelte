@@ -69,14 +69,7 @@
     }
   }
 
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
+  
 </style>
 
 <main class={`main-container ${$appState}`}>
