@@ -23,7 +23,7 @@
 
   div {
     border-style: solid;
-    border-color: #ff3e00;
+    border-color: var(--border-red);
     border-radius: 15px;
   }
 

@@ -1,10 +1,16 @@
 <script lang="ts">
   import { playerState, helpContent } from '../../stores';
-  import { audioStart, audioStop } from '../../audio/player';
-  
+  import audioPlayer from '../../audio/player';
+  import { OscillatorSource } from '../../audio/source';
+
   const playButtonHandler = () => {
-    $playerState.isPlayback = true;
-    audioStart();
+    //  test
+    if (audioPlayer.getSource() === null) {
+      audioPlayer.setAudioSource(OscillatorSource.createSource);
+    }
+    if (audioPlayer.start()) {
+      $playerState.isPlayback = true;
+    }
   };
 
   const recordButtonHandler = () => {
@@ -14,7 +20,7 @@
   const stopButtonHandler = () => {
     $playerState.isRecording = false;
     $playerState.isPlayback = false;
-    audioStop();
+    audioPlayer.stop();
   };
 </script>
 

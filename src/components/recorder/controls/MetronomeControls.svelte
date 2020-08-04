@@ -41,7 +41,7 @@
   class="navbar-input"
   on:keydown={e => setBPMState(e)}
   bind:value={$recorderSettings.bpm}
-  on:mouseover={() => helpContent.set('Set BPM')} />
+  on:mouseover={() => helpContent.set('Set tempo')} />
 <button
   on:click={countINButtonHandler}
   class="control-btn"

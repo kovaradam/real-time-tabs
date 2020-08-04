@@ -1,22 +1,32 @@
-export {};
+class Microphone {
+  private static instance = null;
+  streamSource = null;
+  audioContext = null;
 
-let streamSource = null;
+  private constructor() {}
 
-const handleMicrophoneConnect = (stream: MediaStream) => {
-  const audioContext = new AudioContext();
-  streamSource = audioContext.createMediaStreamSource(stream);
-  // const processor = audioContext.createScriptProcessor(1024, 1, 1);
-  // streamSource.connect(processor);
-  // processor.connect(audioContext.destination);
-  streamSource.connect(audioContext.destination);
-};
+  static createInstance = () => {
+    if (Microphone.instance !== null) return null;
+    return new Microphone();
+  };
 
-export function connectMicrophone() {
-  navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(handleMicrophoneConnect);
+  handleMicrophoneConnect = (stream: MediaStream) => {
+    if (this.streamSource === null) {
+      this.audioContext = new AudioContext();
+      this.streamSource = this.audioContext.createMediaStreamSource(stream);
+    }
+    this.streamSource.connect(this.audioContext.destination);
+  };
+
+  connect = () => {
+    navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(this.handleMicrophoneConnect);
+  };
+
+  disconnect = () => {
+    if (this.streamSource) {
+      this.streamSource.disconnect();
+    }
+  };
 }
 
-export function disconnectMicrophone() {
-  if (streamSource) {
-    streamSource.disconnect();
-  }
-}
+export default Microphone.createInstance();

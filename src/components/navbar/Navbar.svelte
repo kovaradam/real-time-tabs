@@ -1,10 +1,10 @@
 <script lang="ts">
-  import {appState} from '../../stores'
-import { AppState } from '../../utils/enums'
+  import { appState } from '../../stores';
+  import { AppState } from '../../utils/enums';
 
   const closeButtonHandler = () => {
-    appState.set(AppState.HOME)
-  }
+    appState.set(AppState.HOME);
+  };
 </script>
 
 <style>
@@ -24,19 +24,19 @@ import { AppState } from '../../utils/enums'
   section i {
     padding: 8px;
     font-size: 1.2em;
-    color: var(--main-pink);
-    background-color: white;
     height: min-content;
     border-radius: 0 0 0 15px;
+    background-color: var(--main-pink);
+    color: rgba(255, 255, 255, 0.747);
   }
 
   section i:hover {
+    color: var(--main-pink);
     cursor: pointer;
-    color: white;
-    background-color: rgba(255, 255, 255, 0);
+    background-color: rgba(255, 255, 255, 0.747);
   }
   section i:active {
-    background-color: var(--main-pink);
+    background-color: rgba(255, 255, 255, 0.4);
   }
 </style>
 

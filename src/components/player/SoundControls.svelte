@@ -1,28 +1,32 @@
 <script lang="ts">
   import { helpContent, recorderSettings } from '../../stores';
   import { playerSettings } from '../../stores/player';
-  import { audioSetVolume } from '../../audio/player';
-  import { connectMicrophone, disconnectMicrophone } from '../../audio/microphone';
+  import audioPlayer from '../../audio/player';
+  import microphone from '../../audio/microphone';
+
+  let volumeSliderValue = 50;
 
   const soundButtonHandler = () => {
     $playerSettings.isSoundOn = !$playerSettings.isSoundOn;
-    const volume = $playerSettings.isSoundOn ? $playerSettings.volume : 0;
-    audioSetVolume(volume);
+    const volume = $playerSettings.isSoundOn ? volumeSliderValue : 0;
+    $playerSettings.volume = volume;
+    audioPlayer.setVolume(volume);
     setSoundButtonHelpContent();
   };
 
   const microphoneButtonHandler = () => {
     $recorderSettings.isMicrophoneOn = !$recorderSettings.isMicrophoneOn;
     if ($recorderSettings.isMicrophoneOn) {
-      connectMicrophone();
+      microphone.connect();
     } else {
-      disconnectMicrophone();
+      microphone.disconnect();
     }
     setMicrophoneButtonHelpContent();
   };
 
   const volumeSliderInputHandler = () => {
-    audioSetVolume($playerSettings.volume);
+    $playerSettings.isSoundOn = true;
+    audioPlayer.setVolume(volumeSliderValue);
     setVolumeSliderHelpContent();
   };
 
@@ -104,8 +108,7 @@
     min="1"
     max="100"
     class="volume-slider"
-    bind:value={$playerSettings.volume}
-    disabled={!$playerSettings.isSoundOn}
+    bind:value={volumeSliderValue}
     on:mouseover={setVolumeSliderHelpContent}
     on:input={volumeSliderInputHandler} />
 </div>

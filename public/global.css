@@ -3,6 +3,7 @@
   --welcome-card-width: 240px;
   --recorder-container-height: 200px;
   --recorder-container-width: 700px;
+  --border-red: rgb(225, 144, 144);
   --main-orange: #ff3e00;
   --main-pink: rgba(195, 35, 35, 0.295);
 }
@@ -79,7 +80,7 @@ button:focus {
   margin: 30px auto 0 auto;
   overflow: hidden;
   border-style: solid;
-  border-color: #ff3e00;
+  border-color: var(--border-red);
   border-radius: 15px;
   border-width: 1px;
   box-shadow: 0px 0px 47px -20px rgba(0, 0, 0, 0.5);
@@ -89,6 +90,7 @@ button:focus {
   width: 100%;
   flex-grow: 1;
   box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.37);
+  background-color: white;
 }
 
 .right-bordered {
