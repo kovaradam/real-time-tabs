@@ -1,16 +1,21 @@
 import type { AudioSource } from './source';
 import type { AudioSourceFactory } from './source';
+import { AudioContextSingleton } from './context';
 
 class AudioPlayer {
   private static instance: AudioPlayer = null;
-  private audioContext: AudioContext = null;
-  private gainNode: GainNode = null;
-  private audioSource: AudioSource = null;
-  private constructor() {}
 
-  static createInstance = () => {
-    if (AudioPlayer.instance !== null) return null;
-    return new AudioPlayer();
+  private constructor(
+    private audioContext: AudioContext = null,
+    private gainNode: GainNode = null,
+    private audioSource: AudioSource = null,
+  ) {}
+
+  static getInstance = () => {
+    if (AudioPlayer.instance === null) {
+      AudioPlayer.instance = new AudioPlayer();
+    }
+    return AudioPlayer.instance;
   };
 
   start = () => {
@@ -44,11 +49,11 @@ class AudioPlayer {
   };
 
   private setAudioDestination = () => {
-    this.audioContext = new AudioContext();
+    this.audioContext = AudioContextSingleton.getInstance();
     this.gainNode = this.audioContext.createGain();
   };
 }
 
-const instance = AudioPlayer.createInstance();
+const instance = AudioPlayer.getInstance();
 
 export default instance;
