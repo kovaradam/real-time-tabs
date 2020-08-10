@@ -1,8 +1,10 @@
 <script lang="ts">
   import { appState } from '../../stores';
   import { AppState } from '../../utils/enums';
+  import { killAllAudio } from '../../stores';
 
   const closeButtonHandler = () => {
+    killAllAudio();
     appState.set(AppState.HOME);
   };
 </script>

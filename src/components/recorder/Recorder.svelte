@@ -3,9 +3,10 @@
   import Help from '../help/Help.svelte';
   import PlayerControls from '../player/PlayerControls.svelte';
   import SoundControls from '../player/SoundControls.svelte';
-  import { helpContent, playerState } from '../../stores';
+  import { helpContent } from '../../stores';
   import MetronomeControls from './controls/MetronomeControls.svelte';
   import TimeSignatureControls from './controls/TimeSignatureControls.svelte';
+  import { isAudioPlayback } from '../../stores/player';
 
   helpContent.set('Recording tool');
 </script>
@@ -39,7 +40,7 @@
 </style>
 
 <main>
-  <Navbar >
+  <Navbar>
     <div class="right-bordered">
       <PlayerControls />
     </div>
@@ -57,7 +58,7 @@
     </div>
   </Navbar>
   <section class="contents">
-    <p>{$playerState.isPlayback ? 'Sound test...' : 'Recorder'}</p>
+    <p>{$isAudioPlayback ? 'Sound test...' : 'Recorder'}</p>
   </section>
   <Help />
 </main>

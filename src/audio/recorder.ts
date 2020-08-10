@@ -1,20 +1,20 @@
-class Recorder {
-  private static instance = null;
+class AudioRecorder {
+  private static instance;
 
   private constructor() {}
 
   static getInstance = () => {
-    if (Recorder.instance === null) {
-      Recorder.instance = new Recorder();
+    if (AudioRecorder.instance === undefined) {
+      AudioRecorder.instance = new AudioRecorder();
     }
-    return Recorder.instance;
+    return AudioRecorder.instance;
   };
 
-  start = () => {};
+  start = () => {
+    return true;
+  };
 
   stop = () => {};
 }
 
-const instance = Recorder.getInstance();
-
-export default instance;
+export const audioRecorder = AudioRecorder.getInstance();

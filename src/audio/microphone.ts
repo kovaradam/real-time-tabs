@@ -1,21 +1,22 @@
-import { AudioContextSingleton } from "./context";
+import { AudioContextSingleton } from './context';
 
 class Microphone {
-  private static instance = null;
-  streamSource = null;
-  audioContext = null;
+  private static instance: Microphone;
 
-  private constructor() {}
+  private constructor(
+    private streamSource: MediaStreamAudioSourceNode = undefined,
+    private audioContext: AudioContext = undefined,
+  ) {}
 
   static getInstance = () => {
-    if (Microphone.instance === null) {
+    if (Microphone.instance === undefined) {
       Microphone.instance = new Microphone();
     }
     return Microphone.instance;
   };
 
   handleMicrophoneConnect = (stream: MediaStream) => {
-    if (this.streamSource === null) {
+    if (this.streamSource === undefined) {
       this.audioContext = AudioContextSingleton.getInstance();
       this.streamSource = this.audioContext.createMediaStreamSource(stream);
     }
@@ -34,4 +35,4 @@ class Microphone {
   };
 }
 
-export default Microphone.getInstance();
+export const microphone = Microphone.getInstance();

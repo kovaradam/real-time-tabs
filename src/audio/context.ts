@@ -1,10 +1,10 @@
 export class AudioContextSingleton {
-  static audioContextInstance: AudioContext = null;
+  static audioContextInstance: AudioContext;
 
   private constructor() {}
 
   static getInstance = () => {
-    if (AudioContextSingleton.audioContextInstance === null) {
+    if (AudioContextSingleton.audioContextInstance === undefined) {
       AudioContextSingleton.audioContextInstance = new AudioContext();
     }
     return AudioContextSingleton.audioContextInstance;

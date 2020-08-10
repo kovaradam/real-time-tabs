@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import { toggleStoreAttribute, setStoreAttribute } from '../utils/store-utils';
+import { microphone } from '../audio/microphone';
 
 
 const defaultRecorderSettings = {
@@ -51,3 +52,12 @@ export const toggleMetronome = () => {
 export const toggleCountIn = () => {
   toggleStoreAttribute(recorderSettings, 'isCountInOn')
 };
+
+export const setIsMetronomeOn = (input:boolean) => {
+  if(input) {
+    microphone.connect();
+  } else {
+    microphone.disconnect();
+  }
+  setStoreAttribute(recorderSettings, 'isMicrophoneOn', input);
+}
