@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { recorderSettings, helpContent } from '../../../stores';
-  import { setTimeSignatureState } from '../../../stores/recorder';
+  import { recorderSettings, helpContent } from '../../stores';
+  import { setTimeSignatureState } from '../../stores/recorder';
+  import { setHelpContent } from '../../stores/help-content';
 </script>
 
 <style>
@@ -20,10 +21,10 @@
   class="navbar-input"
   bind:value={$recorderSettings.timeSignature.upper}
   on:keydown={e => setTimeSignatureState(e, 'upper')}
-  on:mouseover={() => helpContent.set('Set number of beats per bar')} />
+  on:mouseover={() => setHelpContent('Set number of beats per bar')} />
 <span>/</span>
 <input
   class="navbar-input"
   bind:value={$recorderSettings.timeSignature.lower}
   on:keydown={e => setTimeSignatureState(e, 'lower')}
-  on:mouseover={() => helpContent.set('Set length of a beat')} />
+  on:mouseover={() => setHelpContent('Set length of a beat')} />

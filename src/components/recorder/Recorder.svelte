@@ -1,15 +1,15 @@
 <script lang="ts">
   import Navbar from '../navbar/Navbar.svelte';
   import Help from '../help/Help.svelte';
-  import PlayerControls from '../player/PlayerControls.svelte';
-  import SoundControls from '../player/SoundControls.svelte';
-  import { helpContent } from '../../stores';
-  import MetronomeControls from './controls/MetronomeControls.svelte';
-  import TimeSignatureControls from './controls/TimeSignatureControls.svelte';
-  import { isAudioPlayback } from '../../stores/player';
-import Main from './Main.svelte';
+  import PlayerControls from '../sound-controls/PlayerControls.svelte';
+  import SoundControls from '../sound-controls/SoundControls.svelte';
+  import MetronomeControls from '../sound-controls/MetronomeControls.svelte';
+  import TimeSignatureControls from '../sound-controls/TimeSignatureControls.svelte';
+  import Main from './Main.svelte';
+  import { setHelpContent } from '../../stores/help-content';
+  import FileControls from '../file-controls/FileControls.svelte';
 
-  helpContent.set('Recording tool');
+  setHelpContent('Recording tool');
 </script>
 
 <style>
@@ -30,8 +30,6 @@ import Main from './Main.svelte';
     padding: 0 10px;
     overflow: hidden;
   }
-
- 
 </style>
 
 <main>
@@ -49,9 +47,9 @@ import Main from './Main.svelte';
       <SoundControls />
     </div>
     <div>
-      <button class="control-btn fa fa-download" on:mouseover={() => helpContent.set('Download recording')} />
+      <FileControls />
     </div>
   </Navbar>
-  <Main/>
+  <Main />
   <Help />
 </main>

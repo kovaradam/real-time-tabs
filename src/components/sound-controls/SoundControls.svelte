@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { helpContent, recorderSettings } from '../../stores';
+  import { recorderSettings } from '../../stores';
   import { playerSettings } from '../../stores/player';
   import { audioPlayer } from '../../audio/player';
   import { microphone } from '../../audio/microphone';
+import { setHelpContent } from '../../stores/help-content';
 
   let volumeSliderValue = 50;
 
@@ -31,15 +32,15 @@
   };
 
   const setMicrophoneButtonHelpContent = () => {
-    helpContent.set(`Toggle microphone: ${$recorderSettings.isMicrophoneOn ? 'on' : 'off'}`);
+    setHelpContent(`Toggle microphone: ${$recorderSettings.isMicrophoneOn ? 'on' : 'off'}`);
   };
 
   const setSoundButtonHelpContent = () => {
-    helpContent.set(`Toggle sound: ${$playerSettings.isSoundOn ? 'on' : 'off'}`);
+    setHelpContent(`Toggle sound: ${$playerSettings.isSoundOn ? 'on' : 'off'}`);
   };
 
   const setVolumeSliderHelpContent = () => {
-    helpContent.set(`Adjust volume: ${$playerSettings.volume}%`);
+    setHelpContent(`Adjust volume: ${$playerSettings.volume}%`);
   };
 </script>
 
