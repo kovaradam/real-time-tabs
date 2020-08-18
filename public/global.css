@@ -6,6 +6,8 @@
   --border-red: rgb(225, 144, 144);
   --main-orange: #ff3e00;
   --main-pink: rgba(195, 35, 35, 0.295);
+  --alert-yellow: #ffff0047;
+  --alert-red: red;
 }
 
 html,

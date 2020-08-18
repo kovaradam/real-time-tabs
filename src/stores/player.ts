@@ -1,8 +1,10 @@
 import { writable } from 'svelte/store';
 import { audioPlayer } from '../audio/player';
-import { microphone } from '../audio/microphone';
 import { audioRecorder } from '../audio/recorder';
-import { setIsMetronomeOn } from './recorder';
+import { recorderSettings } from './recorder';
+import { getStoreAttribute } from '../utils/store-utils';
+import { setHelpContent } from './help-content';
+import textContent from '../data/text-content';
 
 const defaultRecorderPlayerSettings = {
   isSoundOn: true,
@@ -25,11 +27,17 @@ export const setIsAudioPlayback = (input: boolean) => {
 };
 
 export const setIsRecording = (input: boolean) => {
-  if (input) {
-    input = audioRecorder.start();
-  } else {
+  if (!input) {
     audioRecorder.stop();
+    isRecording.set(false);
+    return;
+  } 
+  if (getStoreAttribute(recorderSettings, 'isMicrophoneOn')) {
+    input = audioRecorder.start();
+    isRecording.set(input);
+  } else {
+    setHelpContent(textContent.error.microphoneOff, true);
   }
-  isRecording.set(input);
+  
 };
 

@@ -7,6 +7,7 @@
   import MetronomeControls from './controls/MetronomeControls.svelte';
   import TimeSignatureControls from './controls/TimeSignatureControls.svelte';
   import { isAudioPlayback } from '../../stores/player';
+import Main from './Main.svelte';
 
   helpContent.set('Recording tool');
 </script>
@@ -30,13 +31,7 @@
     overflow: hidden;
   }
 
-  p {
-    margin: 40px auto;
-    text-align: center;
-    font-weight: 300;
-    font-size: 1.5em;
-    transition: all 20ms;
-  }
+ 
 </style>
 
 <main>
@@ -57,8 +52,6 @@
       <button class="control-btn fa fa-download" on:mouseover={() => helpContent.set('Download recording')} />
     </div>
   </Navbar>
-  <section class="contents">
-    <p>{$isAudioPlayback ? 'Sound test...' : 'Recorder'}</p>
-  </section>
+  <Main/>
   <Help />
 </main>

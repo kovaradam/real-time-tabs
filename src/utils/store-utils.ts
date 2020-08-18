@@ -7,6 +7,15 @@ export const setStoreAttribute = (store: Writable<{}>, key: string, value: any) 
   });
 };
 
+export const getStoreAttribute = (store: Writable<{}>, key: string) => {
+  let value 
+  store.update(prevState => {
+    value = prevState[key];
+    return prevState;
+  });
+  return value;
+};
+
 export const toggleStoreAttribute = (store: Writable<{}>, key: string) => {
   store.update(prevState => {
     if (typeof prevState[key] !== 'boolean') throw Error;

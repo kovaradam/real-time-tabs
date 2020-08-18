@@ -44,7 +44,7 @@ class AudioPlayer {
     this.audioSource = audioSourceFactory(this.audioContext, this.gainNode);
   };
 
-  getSource = () => {
+  getAudioSource = () => {
     return this.audioSource;
   };
 

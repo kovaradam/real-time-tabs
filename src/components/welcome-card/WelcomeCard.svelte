@@ -89,7 +89,7 @@
     <label class="main-button" id="upload" on:click={uploadClickHandler}>
       <i class="fa fa-upload" aria-hidden="true" />
       Upload
-      <input type="file" />
+      <input type="file" accept="audio/*"/>
     </label>
     <button class="main-button" id="record" on:click={recordClickHandler}>
       <i class="fa fa-microphone" aria-hidden="true" />
