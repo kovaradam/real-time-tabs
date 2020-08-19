@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 import { audioPlayer } from '../audio/player';
 import { audioRecorder } from '../audio/recorder';
 import { recorderSettings } from './recorder';
-import { getStoreAttribute } from '../utils/store-utils';
+import { getStoreAttribute } from '../utils/store';
 import { setHelpContent } from './help-content';
 import textContent from '../data/text-content';
 import { setRecordedAudioURL } from './audio-files';
@@ -52,4 +52,3 @@ const startRecording = () => {
   }
   audioRecorder.start();
 };
-

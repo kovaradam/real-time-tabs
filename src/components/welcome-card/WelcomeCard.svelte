@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { appState } from '../../stores';
-  import { AppState } from '../../utils/enums';
+  import { viewState } from '../../stores/view';
+  import { ViewState } from '../../utils/enums';
 
   const name = 'REAL TIME TABS';
 
   const uploadClickHandler = () => {};
 
   const recordClickHandler = () => {
-    appState.set(AppState.RECORDER);
+    viewState.set(ViewState.RECORDER);
   };
 </script>
 

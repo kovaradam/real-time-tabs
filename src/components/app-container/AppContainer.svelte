@@ -1,14 +1,12 @@
 <script lang="ts">
   import WelcomeCard from '../welcome-card/WelcomeCard.svelte';
   import Recorder from '../recorder/Recorder.svelte';
-  import { appState } from '../../stores';
-  import { AppState } from '../../utils/enums';
+  import { viewState } from '../../stores/view';
+  import { ViewState } from '../../utils/enums';
+  import textContent from '../../data/text-content';
 
-  const welcomeMessage = 'The easiest way to create guitar tabs!';
-
-  $: onMainPage = $appState === AppState.HOME || $appState === AppState.LANDING;
-  $: onRecorderPage = $appState === AppState.RECORDER;
-
+  $: onMainPage = $viewState === ViewState.HOME || $viewState === ViewState.LANDING;
+  $: onRecorderPage = $viewState === ViewState.RECORDER;
 </script>
 
 <style>
@@ -68,19 +66,17 @@
       width: var(--welcome-card-width);
     }
   }
-
-  
 </style>
 
-<main class={`main-container ${$appState}`}>
+<main class={`main-container ${$viewState}`}>
   {#if onMainPage}
-    <WelcomeCard/>
+    <WelcomeCard />
   {:else if onRecorderPage}
-    <Recorder/>
+    <Recorder />
   {:else}
-  <div></div>  
+    <div />
   {/if}
 </main>
 {#if onMainPage}
-  <p>{welcomeMessage}</p>
+  <p>{textContent.welcomeMessage}</p>
 {/if}

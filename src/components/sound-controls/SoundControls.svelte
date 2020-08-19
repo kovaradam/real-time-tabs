@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { recorderSettings } from '../../stores';
+  import { recorderSettings } from '../../stores/recorder';
   import { playerSettings } from '../../stores/player';
   import { audioPlayer } from '../../audio/player';
   import { microphone } from '../../audio/microphone';
-import { setHelpContent } from '../../stores/help-content';
+  import { setHelpContent } from '../../stores/help-content';
 
   let volumeSliderValue = 50;
 

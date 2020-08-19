@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import { toggleStoreAttribute, setStoreAttribute } from '../utils/store-utils';
+import { toggleStoreAttribute, setStoreAttribute } from '../utils/store';
 import { microphone } from '../audio/microphone';
 
 const defaultRecorderSettings = {

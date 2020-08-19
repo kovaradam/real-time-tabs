@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { recorderSettings } from '../../stores';
+  import { recorderSettings } from '../../stores/recorder';
 </script>
 
 <style>
@@ -23,7 +23,7 @@
   }
 </style>
 
-<div class={$recorderSettings.isMetronomeOn && 'metronome-on'}>
+<div class:metronome-on={$recorderSettings.isMetronomeOn}>
   <i class="fa fa-circle" />
   <i class="fa fa-circle-o" />
 </div>

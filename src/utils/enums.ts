@@ -1,4 +1,4 @@
-export enum AppState {
+export enum ViewState {
   LANDING = 'landing-page',
   HOME = 'home',
   RECORDER = 'recorder',
