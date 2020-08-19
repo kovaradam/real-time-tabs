@@ -30,6 +30,11 @@
     padding: 0 10px;
     overflow: hidden;
   }
+
+  .right-bordered {
+    border: solid rgba(255, 255, 255, 0.288);
+    border-width: 0 1px 0 0;
+  }
 </style>
 
 <main>
