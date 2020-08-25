@@ -1,3 +1,5 @@
+import { setHelpContent } from "../stores/help-content";
+import textContent from "../data/text-content";
 
 export abstract class AudioSource {
   abstract start: () => void;
@@ -31,3 +33,54 @@ export class OscillatorSource implements AudioSource {
     return this.oscillator.disconnect();
   };
 }
+
+export class RecordedAudioSource implements AudioSource {
+  private static instance: RecordedAudioSource = null;
+
+  private constructor(
+    private audioContext: AudioContext = null,
+    private gainNode: GainNode = null,
+    private source: MediaElementAudioSourceNode = null,
+    private audioElement: HTMLAudioElement = null,
+    private connected = false,
+  ) {
+    this.audioElement = new Audio();
+    this.audioElement.src = '';
+  }
+
+  getRecordedAudioUrl = () => this.audioElement.src;
+  
+  setRecordedAudioUrl = (URL: string) => {
+    this.audioElement.src = URL;
+  };
+
+  static getInstance = () => {
+    if (RecordedAudioSource.instance === null) {
+      RecordedAudioSource.instance = new RecordedAudioSource();
+    }
+    return RecordedAudioSource.instance;
+  };
+
+  createSource = (audioContext: AudioContext, gainNode: GainNode) => {
+    if (!this.connected) {
+      this.audioContext = audioContext;
+      this.gainNode = gainNode;
+      this.source = audioContext.createMediaElementSource(this.audioElement);
+      this.source.connect(this.gainNode).connect(this.audioContext.destination);
+    }
+    return this;
+  };
+
+  start = () => {
+    if(this.audioElement.src === '') {
+      return false;
+    }
+    this.audioElement.play();
+    return true;
+  };
+  stop = () => {
+    this.audioElement.pause();
+  };
+}
+
+export const recordedAudioSource = RecordedAudioSource.getInstance();

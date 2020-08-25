@@ -9,21 +9,26 @@
       setHelpContent(textContent.error.noFileToDownload, true);
       return;
     }
-    console.log($recordedAudioURL);
   }
 </script>
 
 <style>
   .active {
-    animation: alert 200ms;
+    animation: alert 400ms;
   }
 
   @keyframes alert {
     0% {
       transform: scale(1);
     }
-    50% {
+    25% {
       transform: scale(1.5);
+    }
+    50% {
+      transform: scale(1);
+    }
+    75% {
+      transform: scale(1.2);
     }
     100% {
       transform: scale(1);

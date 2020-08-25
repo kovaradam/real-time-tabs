@@ -1,16 +1,8 @@
 <script lang="ts">
-  import { helpContent } from '../../stores/help-content';
-  import { audioPlayer } from '../../audio/player';
-  import { OscillatorSource } from '../../audio/source';
   import { setIsAudioPlayback, isAudioPlayback, setIsRecording, isRecording } from '../../stores/player';
   import { setHelpContent } from '../../stores/help-content';
 
   const playButtonHandler = () => {
-    //  test
-    if (audioPlayer.getAudioSource() === undefined) {
-      audioPlayer.setAudioSource(OscillatorSource.createSource);
-    }
-    //
     setIsAudioPlayback(true);
   };
 

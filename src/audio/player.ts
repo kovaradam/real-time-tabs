@@ -39,7 +39,7 @@ class AudioPlayer {
 
   setAudioSource = (audioSourceFactory: AudioSourceFactory) => {
     if (this.audioContext === undefined) {
-      this.setAudioDestination();
+      this.createAudioDestination();
     }
     this.audioSource = audioSourceFactory(this.audioContext, this.gainNode);
   };
@@ -48,7 +48,7 @@ class AudioPlayer {
     return this.audioSource;
   };
 
-  private setAudioDestination = () => {
+  private createAudioDestination = () => {
     this.audioContext = AudioContextSingleton.getInstance();
     this.gainNode = this.audioContext.createGain();
   };

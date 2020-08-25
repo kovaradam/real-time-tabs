@@ -21,6 +21,7 @@ export const playerSettings = writable(defaultRecorderPlayerSettings);
 export const setIsAudioPlayback = (isStart: boolean) => {
   if (isStart) {
     isStart = audioPlayer.start();
+    if(!isStart) setHelpContent(textContent.error.noFileToPlay , true);
   } else {
     audioPlayer.stop();
   }
