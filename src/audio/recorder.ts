@@ -1,4 +1,5 @@
 import { microphone } from './microphone';
+import { setRecorderStatusContent } from '../stores/player';
 
 export class AudioRecorder {
   private static instance: AudioRecorder = undefined;
@@ -18,9 +19,10 @@ export class AudioRecorder {
   };
 
   private createMediaRecorder = () => {
-    this.mediaRecorder = microphone.provideMediaRecorder();
+    this.mediaRecorder = microphone.getMediaRecorder();
     this.mediaRecorder.ondataavailable = this.captureAudio;
     this.mediaRecorder.onstop = this.collectAudio;
+    this.mediaRecorder.onstart = () => setRecorderStatusContent('Recording...')
   };
 
   private captureAudio = e => {

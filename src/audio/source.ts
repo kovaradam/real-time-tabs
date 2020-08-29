@@ -1,9 +1,11 @@
-import { setHelpContent } from "../stores/help-content";
-import textContent from "../data/text-content";
+import { setRecorderStatusContent, stopAudioPlayback } from '../stores/player';
 
 export abstract class AudioSource {
   abstract start: () => void;
   abstract stop: () => void;
+  abstract pause: () => void;
+  abstract getDuration: () => number;
+  abstract getCurrentTime: () => number;
   static createSource: AudioSourceFactory;
 }
 
@@ -29,9 +31,10 @@ export class OscillatorSource implements AudioSource {
   start = () => {
     return this.oscillator.connect(this.gainNode).connect(this.audioContext.destination);
   };
-  stop = () => {
-    return this.oscillator.disconnect();
-  };
+  stop = () => this.oscillator.disconnect();
+  pause = this.stop;
+  getDuration = () => Infinity;
+  getCurrentTime = () => Infinity;
 }
 
 export class RecordedAudioSource implements AudioSource {
@@ -46,13 +49,10 @@ export class RecordedAudioSource implements AudioSource {
   ) {
     this.audioElement = new Audio();
     this.audioElement.src = '';
+    this.audioElement.onloadeddata = () =>
+      setRecorderStatusContent(`Recorded audio duration: ${this.audioElement.duration}`);
+    this.audioElement.onended = () => stopAudioPlayback();
   }
-
-  getRecordedAudioUrl = () => this.audioElement.src;
-  
-  setRecordedAudioUrl = (URL: string) => {
-    this.audioElement.src = URL;
-  };
 
   static getInstance = () => {
     if (RecordedAudioSource.instance === null) {
@@ -67,20 +67,36 @@ export class RecordedAudioSource implements AudioSource {
       this.gainNode = gainNode;
       this.source = audioContext.createMediaElementSource(this.audioElement);
       this.source.connect(this.gainNode).connect(this.audioContext.destination);
+      this.connected = true;
     }
     return this;
   };
 
+  getRecordedAudioUrl = () => this.audioElement.src;
+
+  setRecordedAudioUrl = (URL: string) => {
+    this.audioElement.setAttribute('src', URL);
+    this.audioElement.load();
+  };
+
+  getDuration = () => this.audioElement.duration;
+
+  getCurrentTime = () => this.audioElement.currentTime;
+
   start = () => {
-    if(this.audioElement.src === '') {
+    if (this.audioElement.src === '') {
       return false;
     }
     this.audioElement.play();
     return true;
   };
+
   stop = () => {
     this.audioElement.pause();
+    this.audioElement.currentTime = 0;
   };
+
+  pause = () => this.audioElement.pause();
 }
 
 export const recordedAudioSource = RecordedAudioSource.getInstance();

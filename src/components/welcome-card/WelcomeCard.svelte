@@ -1,10 +1,16 @@
 <script lang="ts">
+  import type { loop_guard } from 'svelte/internal';
+  import { setRecordedAudioURL } from '../../stores/audio-files';
   import { viewState } from '../../stores/view';
   import { ViewState } from '../../utils/enums';
 
   const name = 'REAL TIME TABS';
 
-  const uploadClickHandler = () => {};
+  const uploadClickHandler = (event: any) => {
+    const URL = window.URL.createObjectURL(event.target.files[0]);
+    setRecordedAudioURL(URL);
+    viewState.set(ViewState.RECORDER);
+  };
 
   const recordClickHandler = () => {
     viewState.set(ViewState.RECORDER);
@@ -86,10 +92,10 @@
 <main>
   <h1>{name}</h1>
   <div>
-    <label class="main-button" id="upload" on:click={uploadClickHandler}>
+    <label class="main-button" id="upload">
       <i class="fa fa-upload" aria-hidden="true" />
       Upload
-      <input type="file" accept="audio/*"/>
+      <input type="file" accept="audio/*" on:change={uploadClickHandler} />
     </label>
     <button class="main-button" id="record" on:click={recordClickHandler}>
       <i class="fa fa-microphone" aria-hidden="true" />

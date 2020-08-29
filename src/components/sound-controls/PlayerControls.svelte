@@ -1,26 +1,25 @@
 <script lang="ts">
-  import { setIsAudioPlayback, isAudioPlayback, setIsRecording, isRecording } from '../../stores/player';
+  import { setIsAudioPlayback, isAudioPlayback, setIsRecording, isRecording, stopAudioPlayback } from '../../stores/player';
   import { setHelpContent } from '../../stores/help-content';
 
   const playButtonHandler = () => {
-    setIsAudioPlayback(true);
+    setIsAudioPlayback(!$isAudioPlayback);
   };
 
   const recordButtonHandler = () => {
-    setIsRecording(true);
+    setIsRecording(!$isRecording);
   };
 
   const stopButtonHandler = () => {
     setIsRecording(false);
-    setIsAudioPlayback(false);
+    stopAudioPlayback();
   };
 </script>
 
 <button
-  class={'fa fa-play control-btn'}
-  style={$isAudioPlayback && 'color: #4bff4bb8'}
+  class={`fa fa-${$isAudioPlayback ? 'pause' : 'play'} control-btn`}
   disabled={$isRecording}
-  on:mouseover={() => setHelpContent('Play')}
+  on:mouseover={() => setHelpContent($isAudioPlayback ? 'Pause' : 'Play')}
   on:click={playButtonHandler} />
 <button class="fa fa-stop control-btn" on:click={stopButtonHandler} on:mouseover={() => setHelpContent('Stop')} />
 <button

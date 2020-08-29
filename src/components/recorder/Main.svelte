@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { isAudioPlayback, isRecording } from '../../stores/player';
-  import { recordedAudioURL } from '../../stores/audio-files';
+  import { isAudioPlayback, isRecording, recorderStatusContent } from '../../stores/player';
+  import { recordedAudioDuration, recordedAudioURL } from '../../stores/audio-files';
 </script>
 
 <style>
@@ -10,11 +10,6 @@
     font-weight: 300;
     font-size: 1.5em;
     transition: all 200ms;
-  }
-
-  div {
-    margin: auto;
-    width: 50%;
   }
 
   section {
@@ -27,13 +22,5 @@
 </style>
 
 <section class="contents" class:is-recording={$isRecording}>
-  {#if $recordedAudioURL}
-    <div>
-      <audio >
-        <source src={$recordedAudioURL} type="audio/wav" />
-      </audio>
-    </div>
-  {:else}
-    <p>{$isAudioPlayback ? 'Sound test...' : $isRecording ? 'Recording...' : 'Recorder'}</p>
-  {/if}
+  <p>{$recorderStatusContent}</p>
 </section>

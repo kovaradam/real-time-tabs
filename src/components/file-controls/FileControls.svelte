@@ -39,7 +39,7 @@
 <a href={$recordedAudioURL} download="recording.wav">
   <button
     class="control-btn fa fa-download"
-    class:active={$recordedAudioURL}
+    class:active={$recordedAudioURL !== ''}
     on:mouseover={() => setHelpContent('Download recording')}
     on:click={downloadButtonHandler} />
 </a>

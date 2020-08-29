@@ -26,10 +26,14 @@ class AudioPlayer {
     return false;
   };
 
-  stop = () => {
-    this.audioSource?.stop();
-  };
+  stop = () => this.audioSource?.stop();
+  
+  pause = () => this.audioSource?.pause();
 
+  getDuration = () => this.audioSource?.getDuration();
+  
+  getCurrentTime = () => this.audioSource?.getCurrentTime();
+  
   setVolume = (value: number) => {
     if (this.gainNode) {
       const normalised = value / 50;

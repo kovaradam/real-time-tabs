@@ -39,24 +39,9 @@ class Microphone {
     }
   };
 
-  provideMediaRecorder = () => {
+  getMediaRecorder = () => {
     return this.mediaRecorder;
   };
-
-  // connectRecorder = (processor: ScriptProcessorNode) => {
-  //   this.streamSource.disconnect();
-  //   this.streamSource.connect(processor);
-  //   processor.connect(this.audioContext.destination);
-  //   // processor.onaudioprocess = function (e) {
-  //   //   // Do something with the data, e.g. convert it to WAV
-  //   //   console.log(e.inputBuffer);
-  //   // };
-  // };
-
-  // disconnectRecorder = () => {
-  //   this.streamSource.disconnect();
-  //   this.streamSource.connect(this.audioContext.destination);
-  // };
 }
 
 export const microphone = Microphone.getInstance();

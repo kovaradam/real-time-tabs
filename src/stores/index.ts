@@ -1,9 +1,9 @@
-import { playerSettings, setIsAudioPlayback, setIsRecording } from './player';
+import { setIsAudioPlayback, setIsRecording, stopAudioPlayback } from './player';
 import { setIsMetronomeOn } from './recorder';
 import { setRecordedAudioURL } from './audio-files';
 
 export const killAllAudio = () => {
-  setIsAudioPlayback(false);
+  stopAudioPlayback();
   setIsRecording(false);
   setIsMetronomeOn(false);
   setRecordedAudioURL('');
