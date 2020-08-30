@@ -1,10 +1,9 @@
 <script lang="ts">
   import type { loop_guard } from 'svelte/internal';
+  import textContent from '../../data/text-content';
   import { setRecordedAudioURL } from '../../stores/audio-files';
   import { viewState } from '../../stores/view';
   import { ViewState } from '../../utils/enums';
-
-  const name = 'REAL TIME TABS';
 
   const uploadClickHandler = (event: any) => {
     const URL = window.URL.createObjectURL(event.target.files[0]);
@@ -90,7 +89,7 @@
 </style>
 
 <main>
-  <h1>{name}</h1>
+  <h1>{textContent.name}</h1>
   <div>
     <label class="main-button" id="upload">
       <i class="fa fa-upload" aria-hidden="true" />

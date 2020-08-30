@@ -1,6 +1,7 @@
 import type { AudioSource } from './source';
 import type { AudioSourceFactory } from './source';
 import { AudioContextSingleton } from './context';
+import { secondsToMinutes } from './utils';
 
 class AudioPlayer {
   private static instance: AudioPlayer;
@@ -19,7 +20,7 @@ class AudioPlayer {
   };
 
   start = () => {
-    if (this.audioSource) {
+    if (this.audioSource && this.isRecordedAudio()) {
       this.audioSource.start();
       return true;
     }
@@ -27,13 +28,17 @@ class AudioPlayer {
   };
 
   stop = () => this.audioSource?.stop();
-  
+
   pause = () => this.audioSource?.pause();
 
-  getDuration = () => this.audioSource?.getDuration();
-  
-  getCurrentTime = () => this.audioSource?.getCurrentTime();
-  
+  getDuration = () => secondsToMinutes(this.audioSource?.getDuration());
+
+  getCurrentTime = () => secondsToMinutes(this.audioSource?.getCurrentTime());
+
+  setCurrentTime(time: number) {
+    this.audioSource?.setCurrentTime(time);
+  }
+
   setVolume = (value: number) => {
     if (this.gainNode) {
       const normalised = value / 50;
@@ -56,6 +61,10 @@ class AudioPlayer {
     this.audioContext = AudioContextSingleton.getInstance();
     this.gainNode = this.audioContext.createGain();
   };
+  
+  isRecordedAudio = () => this.audioSource.isRecordedAudio();
+
+  deleteRecordedAudioURL = () => this.audioSource?.deleteRecordedAudioURL();
 }
 
 export const audioPlayer = AudioPlayer.getInstance();

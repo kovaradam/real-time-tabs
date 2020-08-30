@@ -1,11 +1,13 @@
-import { setRecorderStatusContent, stopAudioPlayback } from '../stores/player';
-
 export abstract class AudioSource {
   abstract start: () => void;
   abstract stop: () => void;
   abstract pause: () => void;
   abstract getDuration: () => number;
   abstract getCurrentTime: () => number;
+  abstract setCurrentTime: (time: number) => void;
+  abstract deleteRecordedAudioURL: () => void;
+  abstract getRecordedAudioURL: () => string;
+  abstract isRecordedAudio: () => boolean;
   static createSource: AudioSourceFactory;
 }
 
@@ -31,10 +33,16 @@ export class OscillatorSource implements AudioSource {
   start = () => {
     return this.oscillator.connect(this.gainNode).connect(this.audioContext.destination);
   };
+
   stop = () => this.oscillator.disconnect();
+
   pause = this.stop;
   getDuration = () => Infinity;
   getCurrentTime = () => Infinity;
+  setCurrentTime = (_: number) => {};
+  getRecordedAudioURL = () => 'oscillator source';
+  deleteRecordedAudioURL = () => {};
+  isRecordedAudio = () => true;
 }
 
 export class RecordedAudioSource implements AudioSource {
@@ -47,12 +55,13 @@ export class RecordedAudioSource implements AudioSource {
     private audioElement: HTMLAudioElement = null,
     private connected = false,
   ) {
+    this.audioElementSetup();
+  }
+
+  private audioElementSetup = () => {
     this.audioElement = new Audio();
     this.audioElement.src = '';
-    this.audioElement.onloadeddata = () =>
-      setRecorderStatusContent(`Recorded audio duration: ${this.audioElement.duration}`);
-    this.audioElement.onended = () => stopAudioPlayback();
-  }
+  };
 
   static getInstance = () => {
     if (RecordedAudioSource.instance === null) {
@@ -72,16 +81,22 @@ export class RecordedAudioSource implements AudioSource {
     return this;
   };
 
-  getRecordedAudioUrl = () => this.audioElement.src;
+  _getAudioElement = () => this.audioElement;
+
+  getRecordedAudioURL = () => this.audioElement.src;
 
   setRecordedAudioUrl = (URL: string) => {
-    this.audioElement.setAttribute('src', URL);
+    this.audioElement.src = URL;
     this.audioElement.load();
   };
 
   getDuration = () => this.audioElement.duration;
 
   getCurrentTime = () => this.audioElement.currentTime;
+
+  setCurrentTime = (time: number) => {
+    this.audioElement.currentTime = time;
+  };
 
   start = () => {
     if (this.audioElement.src === '') {
@@ -97,6 +112,10 @@ export class RecordedAudioSource implements AudioSource {
   };
 
   pause = () => this.audioElement.pause();
+
+  isRecordedAudio = () => this.audioElement.src !== window.location.href;
+
+  deleteRecordedAudioURL = () => this.setRecordedAudioUrl('');
 }
 
 export const recordedAudioSource = RecordedAudioSource.getInstance();

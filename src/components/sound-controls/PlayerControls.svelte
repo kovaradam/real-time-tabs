@@ -1,6 +1,13 @@
 <script lang="ts">
-  import { setIsAudioPlayback, isAudioPlayback, setIsRecording, isRecording, stopAudioPlayback } from '../../stores/player';
+  import {
+    setIsAudioPlayback,
+    isAudioPlayback,
+    setIsRecording,
+    isRecording,
+    stopAudioPlayback,
+  } from '../../stores/player';
   import { setHelpContent } from '../../stores/help-content';
+import { recordedAudioURL } from '../../stores/audio-files';
 
   const playButtonHandler = () => {
     setIsAudioPlayback(!$isAudioPlayback);
@@ -11,8 +18,10 @@
   };
 
   const stopButtonHandler = () => {
-    setIsRecording(false);
-    stopAudioPlayback();
+    if ($recordedAudioURL !== '' || $isRecording) {
+      setIsRecording(false);
+      stopAudioPlayback();
+    }
   };
 </script>
 

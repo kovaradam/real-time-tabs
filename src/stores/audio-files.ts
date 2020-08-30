@@ -1,21 +1,26 @@
 import { writable } from 'svelte/store';
 import { audioRecorder } from '../audio/recorder';
 import { audioPlayer } from '../audio/player';
-import { recordedAudioSource } from '../audio/source';
+import { setRecordedAudioSource } from './utils';
 
 export const recordedAudioURL = writable('');
 export const recordedAudioDuration = writable(0);
 
-export const setRecordedAudioURL = (URL: string) => {
+export function setRecordedAudioURL(URL: string) {
   recordedAudioURL.set(URL);
   if (URL === '') {
-    audioRecorder.deleteRecordedAudioURL();
+    deleteRecording();
   } else {
-    recordedAudioSource.setRecordedAudioUrl(URL)
-    audioPlayer.setAudioSource(recordedAudioSource.createSource)
+    setRecordedAudioSource(URL);
   }
-};
+}
 
-export const setRecordedAudioDuration = (duration: number) => {
+export function setRecordedAudioDuration(duration: number) {
   recordedAudioDuration.set(duration);
-};
+}
+
+function deleteRecording() {
+  audioRecorder.deleteRecordedAudioURL();
+  audioPlayer?.deleteRecordedAudioURL();
+}
+

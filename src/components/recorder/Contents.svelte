@@ -1,6 +1,9 @@
 <script lang="ts">
-  import { isAudioPlayback, isRecording, recorderStatusContent } from '../../stores/player';
-  import { recordedAudioDuration, recordedAudioURL } from '../../stores/audio-files';
+  import { isRecording, recorderStatusContent } from '../../stores/player';
+  import { recordedAudioURL } from '../../stores/audio-files';
+  import AudioTrack from './AudioTrack.svelte';
+
+  $: isRecordedAudio = $recordedAudioURL !== '';
 </script>
 
 <style>
@@ -9,6 +12,7 @@
     text-align: center;
     font-weight: 300;
     font-size: 1.5em;
+    pointer-events: none;
     transition: all 200ms;
   }
 
@@ -23,4 +27,7 @@
 
 <section class="contents" class:is-recording={$isRecording}>
   <p>{$recorderStatusContent}</p>
+  {#if isRecordedAudio}
+    <AudioTrack />
+  {/if}
 </section>

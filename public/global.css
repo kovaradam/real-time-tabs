@@ -89,6 +89,7 @@ button:focus {
 }
 
 .contents {
+  position: relative;
   width: 100%;
   flex-grow: 1;
   box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.37);

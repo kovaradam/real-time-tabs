@@ -1,5 +1,5 @@
 import { microphone } from './microphone';
-import { setRecorderStatusContent } from '../stores/player';
+import type { BlobEvent } from '../utils/interfaces';
 
 export class AudioRecorder {
   private static instance: AudioRecorder = undefined;
@@ -22,11 +22,10 @@ export class AudioRecorder {
     this.mediaRecorder = microphone.getMediaRecorder();
     this.mediaRecorder.ondataavailable = this.captureAudio;
     this.mediaRecorder.onstop = this.collectAudio;
-    this.mediaRecorder.onstart = () => setRecorderStatusContent('Recording...')
   };
 
-  private captureAudio = e => {
-    this.mediaChunks.push(e.data);
+  private captureAudio = (event: BlobEvent) => {
+    this.mediaChunks.push(event.data);
   };
 
   private collectAudio = () => {

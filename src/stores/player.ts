@@ -16,9 +16,18 @@ export const isAudioPlayback = writable(false);
 export const isRecording = writable(false);
 export const playerSettings = writable(defaultRecorderPlayerSettings);
 export const recorderStatusContent = writable('Recorder');
+export const currentTime = writable(0);
 
 export function setRecorderStatusContent(content: string) {
   recorderStatusContent.set(content);
+}
+
+export function setCurrentTime(time: number) {
+  currentTime.set(time);
+}
+
+export function setAudioCurrentTime(time: number) {
+  audioPlayer.setCurrentTime(time);
 }
 
 export function setIsAudioPlayback(isStart: boolean) {
@@ -30,14 +39,13 @@ export function setIsAudioPlayback(isStart: boolean) {
       setRecorderStatusContent('Playing...');
     }
   } else {
-    setRecorderStatusContent(`Playback paused on ${audioPlayer.getCurrentTime().toFixed(2)}`);
+    setRecorderStatusContent(`Playback paused on ${audioPlayer.getCurrentTime()}`);
     audioPlayer.pause();
   }
   isAudioPlayback.set(isStart);
 }
 
 export function stopAudioPlayback() {
-  setRecorderStatusContent('Playback stopped');
   audioPlayer.stop();
   isAudioPlayback.set(false);
 }
@@ -66,5 +74,6 @@ function startRecording() {
   if (!audioRecorder.isCollectAudioCallbackSet()) {
     audioRecorder.setCollectAudioCallback(setRecordedAudioURL);
   }
+  setRecorderStatusContent('Recording...');
   audioRecorder.start();
 }

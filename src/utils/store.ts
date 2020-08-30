@@ -8,7 +8,7 @@ export const setStoreAttribute = (store: Writable<{}>, key: string, value: any) 
 };
 
 export const getStoreAttribute = (store: Writable<{}>, key: string) => {
-  let value 
+  let value: any;
   store.update(prevState => {
     value = prevState[key];
     return prevState;

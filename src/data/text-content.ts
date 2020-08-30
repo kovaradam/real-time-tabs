@@ -1,4 +1,5 @@
 const textContent = {
+  name: 'REAL TIME TABS',
   help: {},
   error: {
     microphoneOff: 'Cannot start recording with microphone muted',

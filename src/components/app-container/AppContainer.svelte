@@ -68,7 +68,7 @@
   }
 </style>
 
-<main class={`main-container ${$viewState}`}>
+<main class={`main-container ${$viewState}`} id="main-container">
   {#if onMainPage}
     <WelcomeCard />
   {:else if onRecorderPage}

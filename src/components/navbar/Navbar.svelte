@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { viewState } from '../../stores/view';
+  import { closeRecorder, viewState } from '../../stores/view';
   import { ViewState } from '../../utils/enums';
-  import { killAllAudio } from '../../stores';
 
   const closeButtonHandler = () => {
-    killAllAudio();
-    viewState.set(ViewState.HOME);
+    if ($viewState === ViewState.RECORDER) {
+      closeRecorder();
+    }
   };
 </script>
 
