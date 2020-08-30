@@ -8,6 +8,8 @@ export class AudioRecorder {
     private mediaRecorder: any = undefined,
     private mediaChunks = [],
     private recordedAudioURL = '',
+    private lastRecorderTimeStamp = Date.now(),
+    private lastRecordingDuration = 0,
     private collectAudioCallback: (recordedAudioURL: string) => void = undefined,
   ) {}
 
@@ -30,8 +32,8 @@ export class AudioRecorder {
 
   private collectAudio = () => {
     const blob = new Blob(this.mediaChunks, { type: 'audio/ogg; codecs=opus' });
-    this.mediaChunks = [];
     this.recordedAudioURL = window.URL.createObjectURL(blob);
+    this.mediaChunks = [];
     this.collectAudioCallback(this.recordedAudioURL);
   };
 
@@ -47,15 +49,19 @@ export class AudioRecorder {
     this.recordedAudioURL = '';
   };
 
+  getLastRecordingDuration = () => this.lastRecordingDuration;
+
   start = () => {
     if (this.mediaRecorder === undefined) this.createMediaRecorder();
     this.mediaRecorder.start();
+    this.lastRecorderTimeStamp = Date.now();
     return true;
   };
 
   stop = () => {
     if (this.isRecording()) {
       this.mediaRecorder.stop();
+      this.lastRecordingDuration = (Date.now() - this.lastRecorderTimeStamp) / 1000;
     }
   };
 }

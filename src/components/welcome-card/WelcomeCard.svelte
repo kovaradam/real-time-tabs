@@ -1,12 +1,14 @@
 <script lang="ts">
   import type { loop_guard } from 'svelte/internal';
   import textContent from '../../data/text-content';
-  import { setRecordedAudioURL } from '../../stores/audio-files';
+  import { setRecordedAudioName, setRecordedAudioURL } from '../../stores/audio-files';
   import { viewState } from '../../stores/view';
   import { ViewState } from '../../utils/enums';
 
   const uploadClickHandler = (event: any) => {
-    const URL = window.URL.createObjectURL(event.target.files[0]);
+    const file = event.target.files[0];
+    const URL = window.URL.createObjectURL(file);
+    setRecordedAudioName(file.name);
     setRecordedAudioURL(URL);
     viewState.set(ViewState.RECORDER);
   };

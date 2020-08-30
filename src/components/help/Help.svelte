@@ -9,7 +9,7 @@
     font-weight: 300;
     transition: all 200ms;
     font-size: 0.9em;
-    margin: 5px 5px;
+    margin: 5px;
     padding: 0 5px;
     border-radius: 5px;
   }

@@ -1,20 +1,18 @@
 <script lang="ts">
-import { secondsToMinutes } from "../../audio/utils";
-
-import { recordedAudioDuration } from "../../stores/audio-files";
-
+  import { secondsToMinutesString } from '../../audio/utils';
+  import { recordedAudioDuration } from '../../stores/audio-files';
 
   export let position = 0;
   let correctTimeStampPosition = 0;
   const timeStampWidthOffset = 4;
-  
+
   $: if (position + timeStampWidthOffset > 100) {
     correctTimeStampPosition = 100 - timeStampWidthOffset;
   } else {
     correctTimeStampPosition = position;
   }
 
-  $: trackPosition = secondsToMinutes(($recordedAudioDuration / 100) * position);
+  $: trackPosition = secondsToMinutesString(($recordedAudioDuration / 100) * position);
 </script>
 
 <style>
@@ -22,6 +20,7 @@ import { recordedAudioDuration } from "../../stores/audio-files";
     top: 0;
     position: absolute;
     height: 100%;
+    z-index: 2;
   }
 
   #track-cursor {
@@ -39,7 +38,10 @@ import { recordedAudioDuration } from "../../stores/audio-files";
     margin-left: 5px;
     font-size: 10px;
     font-weight: 100;
+    padding: 0 2px 2px 2px;
+    border-radius: 2px;
     color: grey;
+    background-color: rgba(255, 255, 255, 0.63);
   }
 </style>
 

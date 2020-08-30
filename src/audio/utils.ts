@@ -1,3 +1,6 @@
-export function secondsToMinutes(input: number) {
-  return (input / 60).toFixed(2);
+export function secondsToMinutesString(input: number) {
+  const minutes = Math.floor(input / 60);
+  const seconds = input % 60;
+  const secondsString = seconds < 10 ? `0${seconds.toFixed()}` : seconds.toFixed();
+  return `${minutes}:${secondsString}`;
 }

@@ -1,3 +1,5 @@
+import { audioRecorder } from './recorder';
+
 export abstract class AudioSource {
   abstract start: () => void;
   abstract stop: () => void;
@@ -90,7 +92,13 @@ export class RecordedAudioSource implements AudioSource {
     this.audioElement.load();
   };
 
-  getDuration = () => this.audioElement.duration;
+  getDuration = () => {
+    if (this.audioElement.duration === Infinity) {
+      return audioRecorder.getLastRecordingDuration();
+    } else {
+      return this.audioElement.duration;
+    }
+  };
 
   getCurrentTime = () => this.audioElement.currentTime;
 

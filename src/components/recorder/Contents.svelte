@@ -2,6 +2,7 @@
   import { isRecording, recorderStatusContent } from '../../stores/player';
   import { recordedAudioURL } from '../../stores/audio-files';
   import AudioTrack from './AudioTrack.svelte';
+  import AudioStatus from './AudioStatus.svelte';
 
   $: isRecordedAudio = $recordedAudioURL !== '';
 </script>
@@ -28,6 +29,7 @@
 <section class="contents" class:is-recording={$isRecording}>
   <p>{$recorderStatusContent}</p>
   {#if isRecordedAudio}
+    <AudioStatus />
     <AudioTrack />
   {/if}
 </section>

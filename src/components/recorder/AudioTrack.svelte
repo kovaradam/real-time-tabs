@@ -21,7 +21,7 @@
   }
 
   function hideTrackCursor() {
-    // trackCursorPosition = 0;
+    trackCursorPosition = 0;
   }
 </script>
 
@@ -32,7 +32,6 @@
     width: 100%;
     height: 100%;
     cursor: pointer;
-    z-index: 50;
   }
 
   span {

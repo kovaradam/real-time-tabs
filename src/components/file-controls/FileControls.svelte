@@ -1,7 +1,7 @@
 <script lang="ts">
   import { setHelpContent } from '../../stores/help-content';
   import textContent from '../../data/text-content';
-  import { recordedAudioURL } from '../../stores/audio-files';
+  import { recordedAudioName, recordedAudioURL } from '../../stores/audio-files';
 
   function downloadButtonHandler(event: MouseEvent) {
     if ($recordedAudioURL === '') {
@@ -36,7 +36,7 @@
   }
 </style>
 
-<a href={$recordedAudioURL} download="recording.wav">
+<a href={$recordedAudioURL} download={$recordedAudioName}>
   <button
     class="control-btn fa fa-download"
     class:active={$recordedAudioURL !== ''}

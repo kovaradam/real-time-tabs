@@ -1,7 +1,7 @@
 import type { AudioSource } from './source';
 import type { AudioSourceFactory } from './source';
 import { AudioContextSingleton } from './context';
-import { secondsToMinutes } from './utils';
+import { secondsToMinutesString } from './utils';
 
 class AudioPlayer {
   private static instance: AudioPlayer;
@@ -31,9 +31,9 @@ class AudioPlayer {
 
   pause = () => this.audioSource?.pause();
 
-  getDuration = () => secondsToMinutes(this.audioSource?.getDuration());
+  getDuration = () => secondsToMinutesString(this.audioSource?.getDuration());
 
-  getCurrentTime = () => secondsToMinutes(this.audioSource?.getCurrentTime());
+  getCurrentTime = () => secondsToMinutesString(this.audioSource?.getCurrentTime());
 
   setCurrentTime(time: number) {
     this.audioSource?.setCurrentTime(time);
