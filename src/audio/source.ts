@@ -106,6 +106,8 @@ export class RecordedAudioSource implements AudioSource {
     this.audioElement.currentTime = time;
   };
 
+  getAudioData = () => {};
+
   start = () => {
     if (this.audioElement.src === '') {
       return false;

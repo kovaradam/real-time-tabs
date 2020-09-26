@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { recorderSettings } from '../../stores/recorder';
+  import { recorderSettings } from '../../stores/recorder-settings';
 </script>
 
 <style>

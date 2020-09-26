@@ -1,5 +1,5 @@
 import { setIsRecording, stopAudioPlayback, setRecorderStatusContent } from './player';
-import { setIsMetronomeOn } from './recorder';
+import { setIsMetronomeOn } from './recorder-settings';
 import { setRecordedAudioURL } from './audio-files';
 
 export const killAllAudio = () => {
@@ -7,5 +7,5 @@ export const killAllAudio = () => {
   setIsRecording(false);
   setIsMetronomeOn(false);
   setRecordedAudioURL('');
-  setRecorderStatusContent('Recorder')
+  setRecorderStatusContent('Recorder');
 };

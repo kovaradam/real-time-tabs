@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { toggleMetronome, setBPMState, recorderSettings, toggleCountIn } from '../../stores/recorder';
+  import { toggleMetronome, setBPMState, recorderSettings, toggleCountIn } from '../../stores/recorder-settings';
   import MetronomeIcon from '../icons/MetronomeIcon.svelte';
   import CountInIcon from '../icons/CountInIcon.svelte';
   import { setHelpContent } from '../../stores/help-content';

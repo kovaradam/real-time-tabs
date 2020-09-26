@@ -7,7 +7,7 @@
   $: recordedAudioNameLength = $recordedAudioName.length * 7.2 + 5;
 
   function enterPressHandler(event: KeyboardEvent) {
-    if(event.key === 'Enter' || event.key === 'Escape') {
+    if (event.key === 'Enter' || event.key === 'Escape') {
       (event.target as HTMLTextAreaElement).blur();
     }
   }
@@ -54,7 +54,7 @@
   }
 
   input {
-    margin: 6px 5px 4px 10px;
+    margin: 6px 10px 4px 10px;
     padding: 0 0 2px 4px;
     background-color: transparent;
     border-width: 0;
@@ -76,6 +76,9 @@
 <div>
   <span id="audio-status-panel">
     <p>{`${secondsToMinutesString($currentTime)} / ${secondsToMinutesString($recordedAudioDuration)}`}</p>
-    <input bind:value={$recordedAudioName} style={`width: ${recordedAudioNameLength}px`} on:keydown={enterPressHandler}/>
+    <input
+      bind:value={$recordedAudioName}
+      style={`width: ${recordedAudioNameLength}px`}
+      on:keydown={enterPressHandler} />
   </span>
 </div>

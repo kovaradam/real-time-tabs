@@ -1,11 +1,11 @@
 import { writable } from 'svelte/store';
 import { audioPlayer } from '../audio/player';
 import { audioRecorder } from '../audio/recorder';
-import { recorderSettings } from './recorder';
+import { recorderSettings } from './recorder-settings';
 import { getStoreAttribute } from '../utils/store';
 import { setHelpContent } from './help-content';
 import textContent from '../data/text-content';
-import { setRecordedAudioURL } from './audio-files';
+import { recordedAudioName, setRecordedAudioURL } from './audio-files';
 
 const defaultRecorderPlayerSettings = {
   isSoundOn: true,
@@ -58,7 +58,6 @@ export function setIsRecording(isStart: boolean) {
   }
   if (getStoreAttribute(recorderSettings, 'isMicrophoneOn')) {
     startRecording();
-    setRecordedAudioURL('');
     isRecording.set(true);
   } else {
     setHelpContent(textContent.error.microphoneOff, true);
@@ -67,6 +66,7 @@ export function setIsRecording(isStart: boolean) {
 
 function stopRecording() {
   if (!audioRecorder.isRecording()) return;
+  recordedAudioName.set(textContent.audioFiles.defaultRecoredAudioName);
   audioRecorder.stop();
 }
 
@@ -74,6 +74,7 @@ function startRecording() {
   if (!audioRecorder.isCollectAudioCallbackSet()) {
     audioRecorder.setCollectAudioCallback(setRecordedAudioURL);
   }
+  setRecordedAudioURL('');
   setRecorderStatusContent('Recording...');
   audioRecorder.start();
 }

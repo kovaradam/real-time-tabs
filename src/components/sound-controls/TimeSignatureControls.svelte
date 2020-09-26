@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { setTimeSignatureState, recorderSettings } from '../../stores/recorder';
+  import { setTimeSignatureState, recorderSettings } from '../../stores/recorder-settings';
   import { setHelpContent } from '../../stores/help-content';
 </script>
 

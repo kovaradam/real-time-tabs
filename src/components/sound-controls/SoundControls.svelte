@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { recorderSettings } from '../../stores/recorder';
+  import { recorderSettings } from '../../stores/recorder-settings';
   import { playerSettings } from '../../stores/player';
   import { audioPlayer } from '../../audio/player';
   import { microphone } from '../../audio/microphone';

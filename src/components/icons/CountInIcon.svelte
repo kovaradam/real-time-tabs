@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { recorderSettings } from '../../stores/recorder';
+  import { recorderSettings } from '../../stores/recorder-settings';
 </script>
 
 <style>
@@ -18,7 +18,6 @@
     margin-bottom: -5px;
   }
 </style>
-
 
 <div class:count-in-on={$recorderSettings.isCountInOn}>
   <p>

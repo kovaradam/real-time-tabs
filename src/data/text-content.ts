@@ -7,6 +7,9 @@ const textContent = {
     noFileToPlay: 'No recorded audio to play',
   },
   welcomeMessage: 'The easiest way to create guitar tabs!',
+  audioFiles: {
+    defaultRecoredAudioName: 'awesome-untitled-track.wav',
+  },
 };
 
 export default textContent;
