@@ -1,6 +1,6 @@
 import { AudioContextSingleton } from './context';
 
-export const config = { samples: 300, channel: 0, maxAmplitude: 100 };
+export const config = { samples: 300, channel: 0, maxAmplitude: 100, minAmplitude: 0 };
 
 async function visualizeAudio(url: string) {
   if (url === '') return '';
@@ -15,12 +15,12 @@ export default visualizeAudio;
 function visualizeAsSVGpoints(audioBuffer: AudioBuffer) {
   const filteredData = filterData(audioBuffer);
   const normalizedData = normalizeData(filteredData);
-  let SVGpoints = '0,0 ';
+  let SVGpoints = '';
   for (let i = 0; i < normalizedData.length; i++) {
     const [x, y] = [i, normalizedData[i] * config.maxAmplitude];
     SVGpoints = SVGpoints.concat(`${x.toFixed()},${y.toFixed()} `);
   }
-  return SVGpoints.concat(`${normalizedData.length},0 `);
+  return padSVGpoints(SVGpoints);
 }
 
 function filterData(audioBuffer: AudioBuffer) {
@@ -42,4 +42,10 @@ function filterData(audioBuffer: AudioBuffer) {
 function normalizeData(filteredData: number[]) {
   const multiplier = Math.pow(Math.max(...filteredData), -1);
   return filteredData.map(n => n * multiplier);
+}
+
+function padSVGpoints(SVGpoints: string) {
+  const leftPad = `0,${config.maxAmplitude} `;
+  const rightPad = `${config.samples + 1},${config.minAmplitude} ${config.samples},${config.maxAmplitude}`;
+  return `${leftPad} ${SVGpoints} ${rightPad}`;
 }

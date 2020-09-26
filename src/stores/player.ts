@@ -35,11 +35,8 @@ export function setIsAudioPlayback(isStart: boolean) {
     isStart = audioPlayer.start();
     if (!isStart) {
       setHelpContent(textContent.error.noFileToPlay, true);
-    } else {
-      setRecorderStatusContent('Playing...');
     }
   } else {
-    setRecorderStatusContent(`Playback paused on ${audioPlayer.getCurrentTime()}`);
     audioPlayer.pause();
   }
   isAudioPlayback.set(isStart);

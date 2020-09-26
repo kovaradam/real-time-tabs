@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { recorderSettings } from '../../stores/recorder-settings';
+  import { recorderSettings, setIsMicrophoneOn } from '../../stores/recorder-settings';
   import { playerSettings } from '../../stores/player';
   import { audioPlayer } from '../../audio/player';
-  import { microphone } from '../../audio/microphone';
   import { setHelpContent } from '../../stores/help-content';
 
   let volumeSliderValue = 50;
@@ -17,11 +16,7 @@
 
   const microphoneButtonHandler = () => {
     $recorderSettings.isMicrophoneOn = !$recorderSettings.isMicrophoneOn;
-    if ($recorderSettings.isMicrophoneOn) {
-      microphone.connect();
-    } else {
-      microphone.disconnect();
-    }
+    setIsMicrophoneOn($recorderSettings.isMicrophoneOn);
     setMicrophoneButtonHelpContent();
   };
 

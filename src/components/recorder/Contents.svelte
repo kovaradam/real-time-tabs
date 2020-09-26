@@ -15,6 +15,7 @@
     font-size: 1.5em;
     pointer-events: none;
     transition: all 200ms;
+    color: grey;
   }
 
   section {
@@ -27,9 +28,10 @@
 </style>
 
 <section class="contents" class:is-recording={$isRecording}>
-  <p>{$recorderStatusContent}</p>
   {#if isRecordedAudio}
     <AudioStatus />
     <AudioTrack />
+  {:else}
+    <p>{$recorderStatusContent}</p>
   {/if}
 </section>

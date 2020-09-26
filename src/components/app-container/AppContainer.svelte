@@ -1,6 +1,6 @@
 <script lang="ts">
   import WelcomeCard from '../welcome-card/WelcomeCard.svelte';
-  import Recorder from '../recorder/Recorder.svelte';
+  import Recorder from '../recorder/index.svelte';
   import { viewState } from '../../stores/view';
   import { ViewState } from '../../utils/enums';
   import textContent from '../../data/text-content';

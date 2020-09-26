@@ -1,6 +1,8 @@
 const textContent = {
   name: 'REAL TIME TABS',
-  help: {},
+  help: {
+    audioTrack: 'Audio track',
+  },
   error: {
     microphoneOff: 'Cannot start recording with microphone muted',
     noFileToDownload: 'No recorded audio for download',

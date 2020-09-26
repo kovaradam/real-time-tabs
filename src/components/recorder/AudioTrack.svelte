@@ -3,8 +3,10 @@
   import { recordedAudioDuration, recordedAudioURL } from '../../stores/audio-files';
   import TrackCursor from './TrackCursor.svelte';
   import visualizeAudio, { config } from '../../audio/visualizer';
+  import { setHelpContent } from '../../stores/help-content';
+  import textContent from '../../data/text-content';
 
-  const viewBox = `0 0 ${config.samples + 1} ${config.maxAmplitude}`;
+  const viewBox = `0 0 ${config.samples} ${config.maxAmplitude}`;
 
   let trackCursorPosition = 0;
   let trackSVGpoints = '';
@@ -19,6 +21,7 @@
   }
 
   function trackMouseOverHandler(event: MouseEvent) {
+    setHelpContent(textContent.help.audioTrack);
     trackCursorPosition = getRelativeMousePositionOnTrack(event);
   }
 
@@ -51,6 +54,22 @@
     background-color: rgba(128, 128, 128, 0.384);
   }
 
+  @keyframes slideRight {
+    from {
+      width: 100%;
+    }
+    to {
+      width: 0%;
+    }
+  }
+
+  #track-blocker {
+    background-color: white;
+    z-index: 1;
+    right: 0;
+    animation: slideRight 200ms ease-in forwards;
+  }
+
   svg {
     position: absolute;
     width: 100%;
@@ -61,7 +80,6 @@
 
   polyline {
     fill: white;
-    fill-opacity: 0.5;
     stroke: rgba(128, 128, 128, 0.384);
   }
 
@@ -72,13 +90,15 @@
 </style>
 
 <div id="audio-track" on:mousemove={trackMouseOverHandler} on:mouseout={hideTrackCursor} on:click={trackClickHandler}>
-  <span id="status-bar" style={`width: ${($currentTime / $recordedAudioDuration) * 100}%`} />
   <TrackCursor position={trackCursorPosition} />
-  <svg class="upper" {viewBox} preserveAspectRatio="none">
-    <polyline points={trackSVGpoints} />
-  </svg>
-  <svg {viewBox} preserveAspectRatio="none">
-    <polyline points={trackSVGpoints} />
-  </svg>
-
+  <span id="status-bar" style={`width: ${($currentTime / $recordedAudioDuration) * 100}%`} />
+  {#if trackSVGpoints !== ''}
+    <div id="track-blocker" />
+    <svg class="upper" {viewBox} preserveAspectRatio="none">
+      <polyline points={trackSVGpoints} />
+    </svg>
+    <svg {viewBox} preserveAspectRatio="none">
+      <polyline points={trackSVGpoints} />
+    </svg>
+  {/if}
 </div>
