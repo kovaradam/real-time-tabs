@@ -1,5 +1,9 @@
 const textContent = {
   name: 'REAL TIME TABS',
+  recorder: {
+    noAudio: 'No audio avalaible',
+    default: 'Recorder',
+  },
   help: {
     audioTrack: 'Audio track',
   },

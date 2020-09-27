@@ -15,42 +15,11 @@
 
 <style>
   div {
-    overflow: hidden;
-    position: absolute;
     top: 0;
-    z-index: 2;
   }
 
   #audio-status-panel {
-    box-shadow: inset 0px 1px 4px -1px rgba(0, 0, 0, 0.37);
-    background-color: rgb(226, 223, 223);
     border-bottom-right-radius: 15px;
-    width: min-content;
-    height: min-content;
-    display: flex;
-    animation: slide-down 200ms ease-in;
-    transition: width 200ms;
-  }
-
-  @keyframes slide-down {
-    from {
-      transform: translateY(-100%);
-    }
-    to {
-      transform: translateY(0%);
-    }
-  }
-
-  p {
-    text-align: center;
-    font-weight: 200;
-    transition: all 200ms;
-    font-size: 0.9em;
-    margin: 5px 0px 4px 10px;
-    padding-right: 10px;
-    white-space: nowrap;
-    border-right: 1px solid rgba(0, 0, 0, 0.218);
-    min-width: 70px;
   }
 
   input {
@@ -73,9 +42,11 @@
   }
 </style>
 
-<div>
-  <span id="audio-status-panel">
-    <p>{`${secondsToMinutesString($currentTime)} / ${secondsToMinutesString($recordedAudioDuration)}`}</p>
+<div class="audio-panel-container">
+  <span id="audio-status-panel" class="audio-panel">
+    <p class="audio-panel-content">
+      {`${secondsToMinutesString($currentTime)} / ${secondsToMinutesString($recordedAudioDuration)}`}
+    </p>
     <input
       bind:value={$recordedAudioName}
       style={`width: ${recordedAudioNameLength}px`}

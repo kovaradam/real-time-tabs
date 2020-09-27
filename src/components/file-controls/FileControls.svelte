@@ -1,45 +1,23 @@
 <script lang="ts">
   import { setHelpContent } from '../../stores/help-content';
-  import textContent from '../../data/text-content';
-  import { recordedAudioName, recordedAudioURL } from '../../stores/audio-files';
+  import { uploadAudioFile } from '../../stores/audio-files';
+  import type { InputEvent } from '../../utils/interfaces';
 
-  function downloadButtonHandler(event: MouseEvent) {
-    if ($recordedAudioURL === '') {
-      event.preventDefault();
-      setHelpContent(textContent.error.noFileToDownload, true);
-      return;
-    }
-  }
+  const uploadClickHandler = (event: InputEvent) => {
+    uploadAudioFile(event);
+  };
 </script>
 
 <style>
-  .active {
-    animation: alert 400ms;
+  label:hover {
+    cursor: pointer;
   }
 
-  @keyframes alert {
-    0% {
-      transform: scale(1);
-    }
-    25% {
-      transform: scale(1.5);
-    }
-    50% {
-      transform: scale(1);
-    }
-    75% {
-      transform: scale(1.2);
-    }
-    100% {
-      transform: scale(1);
-    }
+  input {
+    display: none;
   }
 </style>
 
-<a href={$recordedAudioURL} download={$recordedAudioName}>
-  <button
-    class="control-btn fa fa-download"
-    class:active={$recordedAudioURL !== ''}
-    on:mouseover={() => setHelpContent('Download recording')}
-    on:click={downloadButtonHandler} />
-</a>
+<label class="control-btn fa fa-upload" on:mouseover={() => setHelpContent('Upload recording')}>
+  <input type="file" accept="audio/*" on:change={uploadClickHandler} />
+</label>

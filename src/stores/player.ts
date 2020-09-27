@@ -15,7 +15,7 @@ const defaultRecorderPlayerSettings = {
 export const isAudioPlayback = writable(false);
 export const isRecording = writable(false);
 export const playerSettings = writable(defaultRecorderPlayerSettings);
-export const recorderStatusContent = writable('Recorder');
+export const recorderStatusContent = writable(textContent.recorder.default);
 export const currentTime = writable(0);
 
 export function setRecorderStatusContent(content: string) {

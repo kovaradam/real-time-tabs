@@ -11,9 +11,10 @@
   }
 
   a {
-    margin: 0 10px
+    margin: 0 10px;
   }
-  button, a {
+  button,
+  a {
     background-color: transparent;
     color: rgb(134, 134, 134);
     border: none;
@@ -32,5 +33,9 @@
 <div>
   <button>Help</button>
   <button>About</button>
-  <a class="fa fa-github" href="https://github.com/kovaradam/real-time-tabs"> </a>
+  <a
+    class="fa fa-github"
+    href="https://github.com/kovaradam/real-time-tabs"
+    target="_blank"
+    rel="noreferrer noopener" />
 </div>

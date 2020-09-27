@@ -5,7 +5,7 @@
   import SoundControls from '../sound-controls/SoundControls.svelte';
   import MetronomeControls from '../sound-controls/MetronomeControls.svelte';
   import TimeSignatureControls from '../sound-controls/TimeSignatureControls.svelte';
-  import Main from './Contents.svelte';
+  import AudioContent from './Contents.svelte';
   import { setHelpContent } from '../../stores/help-content';
   import FileControls from '../file-controls/FileControls.svelte';
 
@@ -55,6 +55,6 @@
       <FileControls />
     </div>
   </Navbar>
-  <Main />
+  <AudioContent />
   <Help />
 </main>

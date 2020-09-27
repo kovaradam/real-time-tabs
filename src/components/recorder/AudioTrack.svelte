@@ -80,12 +80,22 @@
 
   polyline {
     fill: white;
+    opacity: 0.7;
     stroke: rgba(128, 128, 128, 0.384);
   }
 
   .upper {
     top: 0;
     transform: scaleY(-1);
+  }
+
+  p {
+    margin: 40px auto;
+    text-align: center;
+    width: 100%;
+    font-size: 2em;
+    pointer-events: none;
+    color: #9696968a;
   }
 </style>
 
@@ -100,5 +110,7 @@
     <svg {viewBox} preserveAspectRatio="none">
       <polyline points={trackSVGpoints} />
     </svg>
+  {:else}
+    <p class="fa fa-spinner fa-spin" />
   {/if}
 </div>
