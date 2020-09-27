@@ -27,7 +27,6 @@
     flex-direction: column;
     animation: slide-left 200ms ease-in forwards;
     padding-bottom: 6px;
-    padding-left: 3px;
   }
 
   @keyframes slide-left {
@@ -45,7 +44,7 @@
     border-radius: 3px;
     min-width: 0;
     min-height: 0;
-    margin: 5px 2px 0 1px;
+    margin: 5px 2px 0 3px;
     padding: 2px;
     color: #6d6d6d;
     transition: all 0ms;

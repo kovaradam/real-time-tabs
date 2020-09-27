@@ -74,7 +74,6 @@
   #record {
     border-left-width: 1px;
     border-radius: 0 15px 15px 0;
-    padding-top: 2px;
     margin: 0;
   }
 
