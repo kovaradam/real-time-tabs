@@ -24,6 +24,7 @@
     "typescript": "^3.9.7"
   },
   "dependencies": {
-    "sirv-cli": "^1.0.0"
+    "sirv-cli": "^1.0.0",
+    "surge": "^0.21.6"
   }
 }

@@ -35,7 +35,7 @@
   };
 
   const setVolumeSliderHelpContent = () => {
-    setHelpContent(`Adjust volume: ${$playerSettings.volume}%`);
+    setHelpContent(`Adjust volume: ${volumeSliderValue}%`);
   };
 </script>
 

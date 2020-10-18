@@ -1,9 +1,10 @@
 <script lang="ts">
   import { setHelpContent } from '../../stores/help-content';
   import { uploadAudioFile } from '../../stores/audio-files';
-  import type { InputEvent } from '../../utils/interfaces';
+import { stopAudioPlayback } from '../../stores/player';
 
-  const uploadClickHandler = (event: InputEvent) => {
+  const uploadClickHandler = (event: any) => {
+    stopAudioPlayback();
     uploadAudioFile(event);
   };
 </script>

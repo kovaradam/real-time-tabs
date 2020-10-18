@@ -21,6 +21,7 @@
     position: absolute;
     height: 100%;
     z-index: 2;
+    pointer-events: none;
   }
 
   #track-cursor {

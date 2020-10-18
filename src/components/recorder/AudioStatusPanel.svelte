@@ -4,7 +4,7 @@
   import { recordedAudioDuration, recordedAudioName } from '../../stores/audio-files';
   import { currentTime } from '../../stores/player';
 
-  $: recordedAudioNameLength = $recordedAudioName.length * 7.2 + 5;
+  $: recordedAudioNameLength = ($recordedAudioName.length + 1) * 7;
 
   function enterPressHandler(event: KeyboardEvent) {
     if (event.key === 'Enter' || event.key === 'Escape') {
@@ -16,6 +16,7 @@
 <style>
   div {
     top: 0;
+    left: 0;
   }
 
   #audio-status-panel {
