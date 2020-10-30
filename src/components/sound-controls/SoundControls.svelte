@@ -14,9 +14,8 @@
     setSoundButtonHelpContent();
   };
 
-  const microphoneButtonHandler = () => {
-    $recorderSettings.isMicrophoneOn = !$recorderSettings.isMicrophoneOn;
-    setIsMicrophoneOn($recorderSettings.isMicrophoneOn);
+  const microphoneButtonHandler = async () => {
+    await setIsMicrophoneOn(!$recorderSettings.isMicrophoneOn);
     setMicrophoneButtonHelpContent();
   };
 

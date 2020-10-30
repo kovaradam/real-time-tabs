@@ -51,9 +51,9 @@ export const toggleCountIn = () => {
   toggleStoreAttribute(recorderSettings, 'isCountInOn');
 };
 
-export const setIsMicrophoneOn = (input: boolean) => {
+export const setIsMicrophoneOn = async (input: boolean) => {
   if (input) {
-    microphone.connect();
+    input = await microphone.connect();
   } else {
     microphone.disconnect();
     setIsRecording(false);

@@ -18,19 +18,25 @@ class Microphone {
     return Microphone.instance;
   };
 
-  private setup = (stream: MediaStream) => {
+  private setupStreamSource = (stream: MediaStream) => {
     this.audioContext = AudioContextSingleton.getInstance();
     this.streamSource = this.audioContext.createMediaStreamSource(stream);
     this.mediaRecorder = new MediaRecorder(stream);
   };
 
   handleMicrophoneConnect = (stream: MediaStream) => {
-    if (this.streamSource === undefined) this.setup(stream);
+    if (this.streamSource === undefined) this.setupStreamSource(stream);
     this.streamSource.connect(this.audioContext.destination);
   };
 
-  connect = () => {
-    navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(this.handleMicrophoneConnect);
+  connect = async () => {
+    return navigator.mediaDevices
+      .getUserMedia({ audio: true, video: false })
+      .then(stream => {
+        this.handleMicrophoneConnect(stream);
+        return true;
+      })
+      .catch(() => false);
   };
 
   disconnect = () => {
