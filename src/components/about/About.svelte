@@ -1,5 +1,6 @@
 <script lang="ts">
-
+  import Icon from 'svelte-awesome';
+  import { github } from 'svelte-awesome/icons';
 </script>
 
 <style>
@@ -12,6 +13,7 @@
 
   a {
     margin: 0 10px;
+    vertical-align: text-top;
   }
   button,
   a {
@@ -33,9 +35,7 @@
 <div>
   <button>Help</button>
   <button>About</button>
-  <a
-    class="fa fa-github"
-    href="https://github.com/kovaradam/real-time-tabs"
-    target="_blank"
-    rel="noreferrer noopener" />
+  <a href="https://github.com/kovaradam/real-time-tabs" target="_blank" rel="noreferrer noopener">
+    <Icon data={github} scale="1.2" />
+  </a>
 </div>

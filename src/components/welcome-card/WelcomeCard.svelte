@@ -3,9 +3,10 @@
   import { uploadAudioFile } from '../../stores/audio-files';
   import { viewState } from '../../stores/view';
   import { ViewState } from '../../utils/enums';
-  import type { InputEvent } from '../../utils/interfaces';
+  import Icon from 'svelte-awesome';
+  import { upload, microphone } from 'svelte-awesome/icons';
 
-  const uploadClickHandler = (event: InputEvent) => {
+  const uploadClickHandler = (event: any) => {
     uploadAudioFile(event);
     viewState.set(ViewState.RECORDER);
   };
@@ -48,7 +49,8 @@
   }
 
   .main-button {
-    padding: 0 5px;
+    padding: 0 15px;
+    box-sizing: border-box;
     color: white;
     font-weight: 500;
     border-width: 0;
@@ -58,6 +60,9 @@
     background-color: var(--main-pink);
     border-color: #ecd0d0;
     transition: all 200ms;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
   }
 
   .main-button:hover {
@@ -67,7 +72,6 @@
   }
 
   #upload {
-    padding-top: 9px;
     border-radius: 15px 0 0 15px;
   }
 
@@ -75,10 +79,6 @@
     border-left-width: 1px;
     border-radius: 0 15px 15px 0;
     margin: 0;
-  }
-
-  .main-button i {
-    margin-right: 5px;
   }
 
   input {
@@ -90,12 +90,12 @@
   <h1>{textContent.name}</h1>
   <div>
     <label class="main-button" id="upload">
-      <i class="fa fa-upload" aria-hidden="true" />
+      <Icon data={upload} class="icon" />
       Upload
       <input type="file" accept="audio/*" on:change={uploadClickHandler} />
     </label>
     <button class="main-button" id="record" on:click={recordClickHandler}>
-      <i class="fa fa-microphone" aria-hidden="true" />
+      <Icon data={microphone} class="button-icon" />
       Record
     </button>
   </div>
