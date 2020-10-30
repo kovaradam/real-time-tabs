@@ -65,6 +65,10 @@
     justify-content: space-evenly;
   }
 
+  .main-button span {
+    padding-bottom: 2px;
+  }
+
   .main-button:hover {
     cursor: pointer;
     background-color: rgba(247, 247, 238, 0.1);
@@ -91,12 +95,12 @@
   <div>
     <label class="main-button" id="upload">
       <Icon data={upload} class="icon" />
-      Upload
+      <span>Upload</span>
       <input type="file" accept="audio/*" on:change={uploadClickHandler} />
     </label>
     <button class="main-button" id="record" on:click={recordClickHandler}>
       <Icon data={microphone} class="button-icon" />
-      Record
+      <span>Record</span>
     </button>
   </div>
 </main>
