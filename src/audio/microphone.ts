@@ -24,16 +24,17 @@ class Microphone {
     this.mediaRecorder = new MediaRecorder(stream);
   };
 
-  handleMicrophoneConnect = (stream: MediaStream) => {
+  connectUserStream = (stream: MediaStream) => {
     if (this.streamSource === undefined) this.setupStreamSource(stream);
     this.streamSource.connect(this.audioContext.destination);
   };
 
   connect = async () => {
+    if (!navigator.mediaDevices) return false;
     return navigator.mediaDevices
       .getUserMedia({ audio: true, video: false })
       .then(stream => {
-        this.handleMicrophoneConnect(stream);
+        this.connectUserStream(stream);
         return true;
       })
       .catch(() => false);
