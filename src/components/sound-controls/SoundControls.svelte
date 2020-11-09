@@ -15,8 +15,13 @@
   };
 
   const microphoneButtonHandler = async () => {
+    const prevState = $recorderSettings.isMicrophoneOn;
     await setIsMicrophoneOn(!$recorderSettings.isMicrophoneOn);
-    setMicrophoneButtonHelpContent();
+    if (!prevState && !$recorderSettings.isMicrophoneOn) {
+      setHelpContent('Could not access microphone on your device', true);
+    } else {
+      setMicrophoneButtonHelpContent();
+    }
   };
 
   const volumeSliderInputHandler = () => {
