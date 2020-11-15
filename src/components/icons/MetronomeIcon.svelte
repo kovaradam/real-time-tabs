@@ -1,5 +1,7 @@
 <script lang="ts">
   import { recorderSettings } from '../../stores/recorder-settings';
+  import Icon from 'svelte-awesome';
+  import { circle, circleO } from 'svelte-awesome/icons';
 </script>
 
 <style>
@@ -24,6 +26,6 @@
 </style>
 
 <div class:metronome-on={$recorderSettings.isMetronomeOn}>
-  <i class="fa fa-circle" />
-  <i class="fa fa-circle-o" />
+  <Icon data={circle} />
+  <Icon data={circleO} />
 </div>

@@ -3,6 +3,8 @@
   import { playerSettings } from '../../stores/player';
   import { audioPlayer } from '../../audio/player';
   import { setHelpContent } from '../../stores/help-content';
+  import Icon from 'svelte-awesome';
+  import { microphone, microphoneSlash, volumeUp, volumeOff } from 'svelte-awesome/icons';
 
   let volumeSliderValue = 50;
 
@@ -47,7 +49,7 @@
   div {
     overflow: hidden;
     width: 35px;
-    height: 35px;
+    height: 38px;
     transition: width 200ms ease-in;
     padding-right: 0;
   }
@@ -94,15 +96,13 @@
   }
 </style>
 
-<button
-  class={`fa fa-microphone${$recorderSettings.isMicrophoneOn ? '' : '-slash'} control-btn`}
-  on:click={microphoneButtonHandler}
-  on:mouseover={setMicrophoneButtonHelpContent} />
+<button class="control-btn" on:click={microphoneButtonHandler} on:mouseover={setMicrophoneButtonHelpContent}>
+  <Icon data={$recorderSettings.isMicrophoneOn ? microphone : microphoneSlash} />
+</button>
 <div>
-  <button
-    class={`fa fa-volume-${$playerSettings.isSoundOn ? 'up' : 'off'} control-btn`}
-    on:mouseover={setSoundButtonHelpContent}
-    on:click={soundButtonHandler} />
+  <button class="control-btn" on:mouseover={setSoundButtonHelpContent} on:click={soundButtonHandler}>
+    <Icon data={$playerSettings.isSoundOn ? volumeUp : volumeOff} />
+  </button>
   <input
     type="range"
     min="1"

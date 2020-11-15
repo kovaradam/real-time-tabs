@@ -3,6 +3,8 @@
   import { killAllAudio } from '../../stores';
   import { recordedAudioName, recordedAudioURL } from '../../stores/audio-files';
   import { setHelpContent } from '../../stores/help-content';
+  import Icon from 'svelte-awesome';
+  import { download, trashO } from 'svelte-awesome/icons';
 
   function handleDownloadButton(event: MouseEvent) {
     if ($recordedAudioURL === '') {
@@ -63,13 +65,17 @@
   <span id="audio-status-panel" class="audio-panel">
     <a href={$recordedAudioURL} download={$recordedAudioName}>
       <button
-        class="audio-panel-content fa fa-download"
+        class="audio-panel-content"
         on:click={handleDownloadButton}
-        on:mouseover={() => setHelpContent('Download recording')} />
+        on:mouseover={() => setHelpContent('Download recording')}>
+        <Icon data={download} />
+      </button>
     </a>
     <button
-      class="audio-panel-content fa fa-trash-o"
+      class="audio-panel-content"
       on:click={handleDeleteButton}
-      on:mouseover={() => setHelpContent('Delete recording')} />
+      on:mouseover={() => setHelpContent('Delete recording')}>
+      <Icon data={trashO} />
+    </button>
   </span>
 </div>

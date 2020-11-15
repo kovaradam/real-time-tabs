@@ -1,7 +1,9 @@
 <script lang="ts">
   import { setHelpContent } from '../../stores/help-content';
   import { uploadAudioFile } from '../../stores/audio-files';
-import { stopAudioPlayback } from '../../stores/player';
+  import { stopAudioPlayback } from '../../stores/player';
+  import Icon from 'svelte-awesome';
+  import { upload } from 'svelte-awesome/icons';
 
   const uploadClickHandler = (event: any) => {
     stopAudioPlayback();
@@ -19,6 +21,7 @@ import { stopAudioPlayback } from '../../stores/player';
   }
 </style>
 
-<label class="control-btn fa fa-upload" on:mouseover={() => setHelpContent('Upload recording')}>
+<label class="control-btn" on:mouseover={() => setHelpContent('Upload recording')}>
+  <Icon data={upload} />
   <input type="file" accept="audio/*" on:change={uploadClickHandler} />
 </label>

@@ -5,6 +5,8 @@
   import visualizeAudio, { config } from '../../audio/visualizer';
   import { setHelpContent } from '../../stores/help-content';
   import textContent from '../../data/text-content';
+  import Icon from 'svelte-awesome';
+  import { spinner } from 'svelte-awesome/icons';
 
   const viewBox = `0 0 ${config.samples} ${config.maxAmplitude}`;
 
@@ -102,6 +104,7 @@
 <div id="audio-track" on:mousemove={trackMouseOverHandler} on:mouseout={hideTrackCursor} on:click={trackClickHandler}>
   <TrackCursor position={trackCursorPosition} />
   <span id="status-bar" style={`width: ${($currentTime / $recordedAudioDuration) * 100}%`} />
+
   {#if trackSVGpoints !== ''}
     <div id="track-blocker" />
     <svg class="upper" {viewBox} preserveAspectRatio="none">
@@ -111,6 +114,8 @@
       <polyline points={trackSVGpoints} />
     </svg>
   {:else}
-    <p class="fa fa-spinner fa-spin" />
+    <p>
+      <Icon data={spinner} pulse scale="2" />
+    </p>
   {/if}
 </div>

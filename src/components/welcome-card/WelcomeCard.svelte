@@ -18,12 +18,13 @@
 
 <style>
   main {
-    text-align: center;
     margin: 0;
     z-index: 1;
     overflow: hidden;
     height: 380px;
     width: 240px;
+    display: flex;
+    flex-direction: column;
   }
 
   div {
@@ -33,11 +34,13 @@
   }
 
   h1 {
-    color: #ff3e00;
+    text-align: center;
+    color: var(--main-orange);
     text-transform: uppercase;
     font-size: 4em;
     font-weight: 100;
     pointer-events: none;
+    flex-grow: 1;
   }
 
   main div {

@@ -4,6 +4,8 @@
   import AudioTrack from './AudioTrack.svelte';
   import AudioStatusPanel from './AudioStatusPanel.svelte';
   import AudioFilePanel from './AudioFilePanel.svelte';
+  import Icon from 'svelte-awesome';
+  import { microphone } from 'svelte-awesome/icons';
 
   $: isRecordedAudio = $recordedAudioURL !== '';
 </script>
@@ -38,6 +40,7 @@
   }
 
   #anim-icon {
+    transform: scale(2);
     animation: icon-animation 1500ms ease-in-out 150ms infinite;
   }
 
@@ -54,13 +57,13 @@
 
   @keyframes icon-animation {
     0% {
-      font-size: 1.8em;
+      transform: scale(2);
     }
     15% {
-      font-size: 1.5em;
+      transform: scale(1.8);
     }
     100% {
-      font-size: 1.5em;
+      transform: scale(1.8);
     }
   }
 
@@ -86,7 +89,9 @@
   {:else if $isRecording}
     <span class="anim-circle" />
     <span class="anim-circle delayed" />
-    <span id="anim-icon" class="fa fa-microphone delayed" />
+    <span id="anim-icon" class="delayed">
+      <Icon data={microphone} />
+    </span>
   {:else}
     <p>{$recorderStatusContent}</p>
   {/if}
