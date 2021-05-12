@@ -1,4 +1,4 @@
-import AudioContext from './audio-contextontext';
+import AudioContext from './audio-context';
 
 export const config = { samples: 300, channel: 0, maxAmplitude: 100, minAmplitude: 0 };
 
