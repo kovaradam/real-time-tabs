@@ -1,4 +1,4 @@
-import { AudioContextSingleton } from './context';
+import AudioContext from './audio-contextontext';
 
 export const config = { samples: 300, channel: 0, maxAmplitude: 100, minAmplitude: 0 };
 
@@ -6,7 +6,7 @@ async function visualizeAudio(url: string) {
   if (url === '') return '';
   return fetch(url)
     .then(response => response.arrayBuffer())
-    .then(arrayBuffer => AudioContextSingleton.getInstance().decodeAudioData(arrayBuffer))
+    .then(arrayBuffer => AudioContext.audioContextInstance.decodeAudioData(arrayBuffer))
     .then(audioBuffer => visualizeAsSVGpoints(audioBuffer));
 }
 

@@ -1,4 +1,5 @@
-import { AudioContextSingleton } from './context';
+import AudioContext from './audio-contextontext';
+import type { AudioContext as AudioContextInterface } from './model';
 
 declare var MediaRecorder: any;
 
@@ -7,7 +8,7 @@ class Microphone {
 
   private constructor(
     private streamSource: MediaStreamAudioSourceNode = undefined,
-    private audioContext: AudioContext = undefined,
+    private audioContext: AudioContextInterface = undefined,
     private mediaRecorder: any = undefined,
   ) {}
 
@@ -19,7 +20,9 @@ class Microphone {
   };
 
   private setupStreamSource = (stream: MediaStream) => {
-    this.audioContext = AudioContextSingleton.getInstance();
+    this.audioContext = AudioContext.audioContextInstance;
+    console.log(this.audioContext.createMediaStreamSource);
+
     this.streamSource = this.audioContext.createMediaStreamSource(stream);
     this.mediaRecorder = new MediaRecorder(stream);
   };
@@ -37,7 +40,11 @@ class Microphone {
         this.connectUserStream(stream);
         return true;
       })
-      .catch(() => false);
+      .catch(e => {
+        console.log(e);
+
+        return false;
+      });
   };
 
   disconnect = () => {

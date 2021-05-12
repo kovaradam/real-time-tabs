@@ -1,13 +1,14 @@
 import type { AudioSource } from './source';
 import type { AudioSourceFactory } from './source';
-import { AudioContextSingleton } from './context';
+import type { AudioContext as AudioContextInterface } from './model';
+import AudioContext from './audio-contextontext';
 import { secondsToMinutesString } from './utils';
 
 class AudioPlayer {
   private static instance: AudioPlayer;
 
   private constructor(
-    private audioContext: AudioContext = undefined,
+    private audioContext: AudioContextInterface = undefined,
     private gainNode: GainNode = undefined,
     private audioSource: AudioSource = undefined,
   ) {}
@@ -58,10 +59,10 @@ class AudioPlayer {
   };
 
   private createAudioDestination = () => {
-    this.audioContext = AudioContextSingleton.getInstance();
+    this.audioContext = AudioContext.audioContextInstance;
     this.gainNode = this.audioContext.createGain();
   };
-  
+
   isRecordedAudio = () => this.audioSource.isRecordedAudio();
 
   deleteRecordedAudioURL = () => this.audioSource?.deleteRecordedAudioURL();

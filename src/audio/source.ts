@@ -1,4 +1,5 @@
 import { audioRecorder } from './recorder';
+import type { AudioContext } from './model';
 
 export abstract class AudioSource {
   abstract start: () => void;
