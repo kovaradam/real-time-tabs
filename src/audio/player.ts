@@ -1,7 +1,7 @@
 import type { AudioSource } from './source';
 import type { AudioSourceFactory } from './source';
 import type { AudioContext as AudioContextInterface } from './model';
-import AudioContext from './audio-contextontext';
+import AudioContext from './audio-context';
 import { secondsToMinutesString } from './utils';
 
 class AudioPlayer {

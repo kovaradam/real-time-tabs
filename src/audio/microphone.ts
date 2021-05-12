@@ -1,4 +1,4 @@
-import AudioContext from './audio-contextontext';
+import AudioContext from './audio-context';
 import type { AudioContext as AudioContextInterface } from './model';
 
 declare var MediaRecorder: any;
