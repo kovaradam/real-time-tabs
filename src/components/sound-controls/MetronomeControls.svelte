@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { toggleMetronome, setBPMState, recorderSettings, toggleCountIn } from '../../stores/recorder-settings';
+  import { toggleMetronome, setBPMState, recorderStore, toggleCountIn } from '../../stores/recorder';
   import MetronomeIcon from '../icons/MetronomeIcon.svelte';
   import CountInIcon from '../icons/CountInIcon.svelte';
   import { setHelpContent } from '../../stores/help-content';
@@ -15,11 +15,11 @@
   };
 
   const setMetronomeButtonHelpContent = () => {
-    setHelpContent(`Toggle metronome: ${$recorderSettings.isMetronomeOn ? 'on' : 'off'}`);
+    setHelpContent(`Toggle metronome: ${$recorderStore.isMetronomeOn ? 'on' : 'off'}`);
   };
 
   const setCountInButtonHelpContent = () => {
-    setHelpContent(`Toggle count in: ${$recorderSettings.isCountInOn ? 'on' : 'off'}`);
+    setHelpContent(`Toggle count in: ${$recorderStore.isCountInOn ? 'on' : 'off'}`);
   };
 </script>
 
@@ -36,7 +36,7 @@
 <input
   class="navbar-input"
   on:keydown={e => setBPMState(e)}
-  bind:value={$recorderSettings.bpm}
+  bind:value={$recorderStore.bpm}
   on:mouseover={() => setHelpContent('Set tempo')} />
 <button
   on:click={countINButtonHandler}

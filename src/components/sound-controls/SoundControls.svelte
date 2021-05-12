@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { recorderSettings, setIsMicrophoneOn } from '../../stores/recorder-settings';
+  import { recorderStore, setIsMicrophoneOn } from '../../stores/recorder';
   import { playerSettings } from '../../stores/player';
-  import { audioPlayer } from '../../audio/player';
   import { setHelpContent } from '../../stores/help-content';
   import Icon from 'svelte-awesome';
   import { microphone, microphoneSlash, volumeUp, volumeOff } from 'svelte-awesome/icons';
@@ -12,14 +11,13 @@
     $playerSettings.isSoundOn = !$playerSettings.isSoundOn;
     const volume = $playerSettings.isSoundOn ? volumeSliderValue : 0;
     $playerSettings.volume = volume;
-    audioPlayer.setVolume(volume);
     setSoundButtonHelpContent();
   };
 
   const microphoneButtonHandler = async () => {
-    const prevState = $recorderSettings.isMicrophoneOn;
-    await setIsMicrophoneOn(!$recorderSettings.isMicrophoneOn);
-    if (!prevState && !$recorderSettings.isMicrophoneOn) {
+    const prevState = $recorderStore.isMicrophoneOn;
+    await setIsMicrophoneOn(!$recorderStore.isMicrophoneOn);
+    if (!prevState && !$recorderStore.isMicrophoneOn) {
       setHelpContent('Could not access microphone on your device', true);
     } else {
       setMicrophoneButtonHelpContent();
@@ -28,12 +26,12 @@
 
   const volumeSliderInputHandler = () => {
     $playerSettings.isSoundOn = true;
-    audioPlayer.setVolume(volumeSliderValue);
+    $playerSettings.volume = volumeSliderValue;
     setVolumeSliderHelpContent();
   };
 
   const setMicrophoneButtonHelpContent = () => {
-    setHelpContent(`Toggle microphone: ${$recorderSettings.isMicrophoneOn ? 'on' : 'off'}`);
+    setHelpContent(`Toggle microphone: ${$recorderStore.isMicrophoneOn ? 'on' : 'off'}`);
   };
 
   const setSoundButtonHelpContent = () => {
@@ -97,7 +95,7 @@
 </style>
 
 <button class="control-btn" on:click={microphoneButtonHandler} on:mouseover={setMicrophoneButtonHelpContent}>
-  <Icon data={$recorderSettings.isMicrophoneOn ? microphone : microphoneSlash} />
+  <Icon data={$recorderStore.isMicrophoneOn ? microphone : microphoneSlash} />
 </button>
 <div>
   <button class="control-btn" on:mouseover={setSoundButtonHelpContent} on:click={soundButtonHandler}>

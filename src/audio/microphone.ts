@@ -1,61 +1,42 @@
 import AudioContext from './audio-context';
-import type { AudioContext as AudioContextInterface } from './model';
 
 declare var MediaRecorder: any;
 
 class Microphone {
-  private static instance: Microphone;
+  private static streamSource: MediaStreamAudioSourceNode = undefined;
+  private static mediaRecorder: any = undefined;
 
-  private constructor(
-    private streamSource: MediaStreamAudioSourceNode = undefined,
-    private audioContext: AudioContextInterface = undefined,
-    private mediaRecorder: any = undefined,
-  ) {}
-
-  static getInstance = () => {
-    if (Microphone.instance === undefined) {
-      Microphone.instance = new Microphone();
-    }
-    return Microphone.instance;
+  private static setupStreamSource = (stream: MediaStream) => {
+    Microphone.streamSource = AudioContext.audioContextInstance.createMediaStreamSource(stream);
+    Microphone.mediaRecorder = new MediaRecorder(stream);
   };
 
-  private setupStreamSource = (stream: MediaStream) => {
-    this.audioContext = AudioContext.audioContextInstance;
-    console.log(this.audioContext.createMediaStreamSource);
-
-    this.streamSource = this.audioContext.createMediaStreamSource(stream);
-    this.mediaRecorder = new MediaRecorder(stream);
+  static connectUserStream = (stream: MediaStream) => {
+    if (Microphone.streamSource === undefined) Microphone.setupStreamSource(stream);
+    Microphone.streamSource.connect(AudioContext.audioContextInstance.destination);
   };
 
-  connectUserStream = (stream: MediaStream) => {
-    if (this.streamSource === undefined) this.setupStreamSource(stream);
-    this.streamSource.connect(this.audioContext.destination);
-  };
-
-  connect = async () => {
+  static connect = async () => {
     if (!navigator.mediaDevices) return false;
-    return navigator.mediaDevices
-      .getUserMedia({ audio: true, video: false })
-      .then(stream => {
-        this.connectUserStream(stream);
-        return true;
-      })
-      .catch(e => {
-        console.log(e);
-
-        return false;
-      });
-  };
-
-  disconnect = () => {
-    if (this.streamSource) {
-      this.streamSource.disconnect();
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+    try {
+      Microphone.connectUserStream(stream);
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
     }
   };
 
-  getMediaRecorder = () => {
-    return this.mediaRecorder;
+  static disconnect = () => {
+    if (Microphone.streamSource) {
+      Microphone.streamSource.disconnect();
+    }
+  };
+
+  static getMediaRecorder = () => {
+    return Microphone.mediaRecorder;
   };
 }
 
-export const microphone = Microphone.getInstance();
+export default Microphone;

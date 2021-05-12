@@ -1,71 +1,69 @@
 import type { AudioSource } from './source';
 import type { AudioSourceFactory } from './source';
-import type { AudioContext as AudioContextInterface } from './model';
 import AudioContext from './audio-context';
 import { secondsToMinutesString } from './utils';
 
 class AudioPlayer {
-  private static instance: AudioPlayer;
+  private static gainNode: GainNode = undefined;
+  private static audioSource: AudioSource = undefined;
 
-  private constructor(
-    private audioContext: AudioContextInterface = undefined,
-    private gainNode: GainNode = undefined,
-    private audioSource: AudioSource = undefined,
-  ) {}
-
-  static getInstance = () => {
-    if (AudioPlayer.instance === undefined) {
-      AudioPlayer.instance = new AudioPlayer();
-    }
-    return AudioPlayer.instance;
-  };
-
-  start = () => {
-    if (this.audioSource && this.isRecordedAudio()) {
-      this.audioSource.start();
+  static start = () => {
+    if (AudioPlayer.audioSource && AudioPlayer.isRecordedAudio()) {
+      AudioPlayer.audioSource.start();
       return true;
     }
     return false;
   };
 
-  stop = () => this.audioSource?.stop();
+  static stop = () => {
+    AudioPlayer.audioSource?.stop();
+  };
 
-  pause = () => this.audioSource?.pause();
+  static pause = () => {
+    AudioPlayer.audioSource?.pause();
+  };
 
-  getDuration = () => secondsToMinutesString(this.audioSource?.getDuration());
+  static getDuration = () => {
+    return secondsToMinutesString(AudioPlayer.audioSource?.getDuration());
+  };
 
-  getCurrentTime = () => secondsToMinutesString(this.audioSource?.getCurrentTime());
+  static getCurrentTime = () => {
+    return secondsToMinutesString(AudioPlayer.audioSource?.getCurrentTime());
+  };
 
-  setCurrentTime(time: number) {
-    this.audioSource?.setCurrentTime(time);
+  static setCurrentTime(time: number) {
+    AudioPlayer.audioSource?.setCurrentTime(time);
   }
 
-  setVolume = (value: number) => {
-    if (this.gainNode) {
+  static setVolume = (value: number) => {
+    if (AudioPlayer.gainNode) {
       const normalised = value / 50;
-      this.gainNode.gain.value = normalised;
+      AudioPlayer.gainNode.gain.value = normalised;
     }
   };
 
-  setAudioSource = (audioSourceFactory: AudioSourceFactory) => {
-    if (this.audioContext === undefined) {
-      this.createAudioDestination();
+  static setAudioSource = (audioSourceFactory: AudioSourceFactory) => {
+    if (AudioPlayer.gainNode === undefined) {
+      AudioPlayer.createAudioDestination();
     }
-    this.audioSource = audioSourceFactory(this.audioContext, this.gainNode);
+    AudioPlayer.audioSource = audioSourceFactory(AudioContext.audioContextInstance, AudioPlayer.gainNode);
   };
 
-  getAudioSource = () => {
-    return this.audioSource;
+  static getAudioSource = () => {
+    return AudioPlayer.audioSource;
   };
 
-  private createAudioDestination = () => {
-    this.audioContext = AudioContext.audioContextInstance;
-    this.gainNode = this.audioContext.createGain();
+  private static createAudioDestination = () => {
+    AudioPlayer.gainNode = AudioContext.audioContextInstance.createGain();
   };
 
-  isRecordedAudio = () => this.audioSource.isRecordedAudio();
+  static isRecordedAudio = () => {
+    return AudioPlayer.audioSource.isRecordedAudio();
+  };
 
-  deleteRecordedAudioURL = () => this.audioSource?.deleteRecordedAudioURL();
+  static deleteRecordedAudioURL = () => {
+    AudioPlayer.audioSource?.deleteRecordedAudioURL();
+  };
 }
 
-export const audioPlayer = AudioPlayer.getInstance();
+export default AudioPlayer;

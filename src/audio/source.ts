@@ -1,4 +1,4 @@
-import { audioRecorder } from './recorder';
+import AudioRecorder from './recorder';
 import type { AudioContext } from './model';
 
 export abstract class AudioSource {
@@ -95,7 +95,7 @@ export class RecordedAudioSource implements AudioSource {
 
   getDuration = () => {
     if (this.audioElement.duration === Infinity) {
-      return audioRecorder.getLastRecordingDuration();
+      return AudioRecorder.getLastRecordingDuration();
     } else {
       return this.audioElement.duration;
     }

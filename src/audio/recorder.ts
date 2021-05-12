@@ -1,69 +1,68 @@
-import { microphone } from './microphone';
+import Microphone from './microphone';
 import type { BlobEvent } from '../utils/interfaces';
 
 export class AudioRecorder {
-  private static instance: AudioRecorder = undefined;
+  private static mediaRecorder: any = undefined;
+  private static mediaChunks = [];
+  private static recordedAudioURL = '';
+  private static lastRecorderTimeStamp = Date.now();
+  private static lastRecordingDuration = 0;
+  private static collectAudioCallback: (recordedAudioURL: string) => void = undefined;
 
-  private constructor(
-    private mediaRecorder: any = undefined,
-    private mediaChunks = [],
-    private recordedAudioURL = '',
-    private lastRecorderTimeStamp = Date.now(),
-    private lastRecordingDuration = 0,
-    private collectAudioCallback: (recordedAudioURL: string) => void = undefined,
-  ) {}
-
-  static getInstance = () => {
-    if (AudioRecorder.instance === undefined) {
-      AudioRecorder.instance = new AudioRecorder();
-    }
-    return AudioRecorder.instance;
+  private static createMediaRecorder = () => {
+    AudioRecorder.mediaRecorder = Microphone.getMediaRecorder();
+    AudioRecorder.mediaRecorder.ondataavailable = AudioRecorder.captureAudio;
+    AudioRecorder.mediaRecorder.onstop = AudioRecorder.collectAudio;
   };
 
-  private createMediaRecorder = () => {
-    this.mediaRecorder = microphone.getMediaRecorder();
-    this.mediaRecorder.ondataavailable = this.captureAudio;
-    this.mediaRecorder.onstop = this.collectAudio;
+  private static captureAudio = (event: BlobEvent) => {
+    AudioRecorder.mediaChunks.push(event.data);
   };
 
-  private captureAudio = (event: BlobEvent) => {
-    this.mediaChunks.push(event.data);
+  private static collectAudio = () => {
+    const blob = new Blob(AudioRecorder.mediaChunks, { type: 'audio/ogg; codecs=opus' });
+    AudioRecorder.recordedAudioURL = window.URL.createObjectURL(blob);
+    AudioRecorder.mediaChunks = [];
+    AudioRecorder.collectAudioCallback(AudioRecorder.recordedAudioURL);
   };
 
-  private collectAudio = () => {
-    const blob = new Blob(this.mediaChunks, { type: 'audio/ogg; codecs=opus' });
-    this.recordedAudioURL = window.URL.createObjectURL(blob);
-    this.mediaChunks = [];
-    this.collectAudioCallback(this.recordedAudioURL);
+  static setCollectAudioCallback = (collectAudioCallback: (recordedAudioURL: string) => void) => {
+    AudioRecorder.collectAudioCallback = collectAudioCallback;
   };
 
-  setCollectAudioCallback = (collectAudioCallback: (recordedAudioURL: string) => void) => {
-    this.collectAudioCallback = collectAudioCallback;
+  static isCollectAudioCallbackSet = () => {
+    return AudioRecorder.collectAudioCallback !== undefined;
   };
 
-  isCollectAudioCallbackSet = () => this.collectAudioCallback !== undefined;
-
-  isRecording = () => this.mediaRecorder?.state === 'recording';
-
-  deleteRecordedAudioURL = () => {
-    this.recordedAudioURL = '';
+  static isRecording = () => {
+    return AudioRecorder.mediaRecorder?.state === 'recording';
   };
 
-  getLastRecordingDuration = () => this.lastRecordingDuration;
+  static isAvailable = () => {
+    return AudioRecorder.mediaRecorder?.state === 'inactive';
+  };
 
-  start = () => {
-    if (this.mediaRecorder === undefined) this.createMediaRecorder();
-    this.mediaRecorder.start();
-    this.lastRecorderTimeStamp = Date.now();
+  static deleteRecordedAudioURL = () => {
+    AudioRecorder.recordedAudioURL = '';
+  };
+
+  static getLastRecordingDuration = () => {
+    return AudioRecorder.lastRecordingDuration;
+  };
+
+  static start = () => {
+    if (AudioRecorder.mediaRecorder === undefined) AudioRecorder.createMediaRecorder();
+    AudioRecorder.mediaRecorder.start();
+    AudioRecorder.lastRecorderTimeStamp = Date.now();
     return true;
   };
 
-  stop = () => {
-    if (this.isRecording()) {
-      this.mediaRecorder.stop();
-      this.lastRecordingDuration = (Date.now() - this.lastRecorderTimeStamp) / 1000;
+  static stop = () => {
+    if (AudioRecorder.isRecording()) {
+      AudioRecorder.mediaRecorder.stop();
+      AudioRecorder.lastRecordingDuration = (Date.now() - AudioRecorder.lastRecorderTimeStamp) / 1000;
     }
   };
 }
 
-export const audioRecorder = AudioRecorder.getInstance();
+export default AudioRecorder;

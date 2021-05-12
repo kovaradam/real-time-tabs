@@ -1,9 +1,12 @@
 import { writable } from 'svelte/store';
-import { audioRecorder } from '../audio/recorder';
-import { audioPlayer } from '../audio/player';
-import { setRecordedAudioSource } from './utils';
+import AudioRecorder from '../audio/recorder';
+import AudioPlayer from '../audio/player';
 import textContent from '../data/text-content';
 import type { InputEvent } from '../utils/interfaces';
+import { recordedAudioSource } from '../audio/source';
+import { setRecorderStatusContent } from './recorder-content';
+import { secondsToMinutesString } from '../audio/utils';
+import { setCurrentTime, stopAudioPlayback } from './player';
 
 export const recordedAudioURL = writable('');
 export const recordedAudioName = writable(textContent.audioFiles.defaultRecoredAudioName);
@@ -34,6 +37,26 @@ export function setRecordedAudioName(name: string) {
 }
 
 function deleteRecording() {
-  audioRecorder.deleteRecordedAudioURL();
-  audioPlayer?.deleteRecordedAudioURL();
+  AudioRecorder.deleteRecordedAudioURL();
+  AudioPlayer?.deleteRecordedAudioURL();
+}
+
+function setRecordedAudioSource(URL: string) {
+  recordedAudioSource.setRecordedAudioUrl(URL);
+  setupAudioElementListeners(recordedAudioSource._getAudioElement());
+  AudioPlayer.setAudioSource(recordedAudioSource.createSource);
+}
+
+function setupAudioElementListeners(audioElement: HTMLAudioElement) {
+  if (audioElement.onended === null) audioElement.onended = () => stopAudioPlayback();
+  if (audioElement.ontimeupdate === null) audioElement.ontimeupdate = () => setCurrentTime(audioElement.currentTime);
+  if (audioElement.onloadeddata === null)
+    audioElement.onloadeddata = () => setValidAudioDuration(audioElement.duration);
+  if (audioElement.ondurationchange === null) audioElement.ondurationchange = audioElement.onloadeddata;
+}
+
+function setValidAudioDuration(duration: number) {
+  duration = duration !== Infinity ? duration : AudioRecorder.getLastRecordingDuration();
+  setRecorderStatusContent(`Recorded audio duration: ${secondsToMinutesString(duration)}`);
+  setRecordedAudioDuration(duration);
 }

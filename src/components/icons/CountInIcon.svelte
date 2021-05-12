@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { recorderSettings } from '../../stores/recorder-settings';
+  import { recorderStore } from '../../stores/recorder';
 </script>
 
 <style>
@@ -19,7 +19,7 @@
   }
 </style>
 
-<div class:count-in-on={$recorderSettings.isCountInOn}>
+<div class:count-in-on={$recorderStore.isCountInOn}>
   <p>
     CNT
     <br />

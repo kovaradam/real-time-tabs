@@ -9,4 +9,4 @@ export const isErrorMessage = writable(false);
 export const setHelpContent = (message: string, isError = false) => {
   helpContent.set(message);
   isErrorMessage.set(isError);
-}
+};

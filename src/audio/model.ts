@@ -15,7 +15,7 @@ export interface AudioContext {
   createMediaStreamDestination: () => any;
   resume: () => void;
   suspend: () => void;
-  decodeAudioData: (arrayBuffer: ArrayBuffer) => AudioBuffer;
+  decodeAudioData: (arrayBuffer: ArrayBuffer) => Promise<AudioBuffer>;
   createGain: () => GainNode;
   createOscillator: () => OscillatorNode;
   createMediaElementSource: (element: HTMLAudioElement) => MediaElementAudioSourceNode;

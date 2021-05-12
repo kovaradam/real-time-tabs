@@ -1,25 +1,18 @@
-import { recordedAudioSource } from '../audio/source';
-import { audioPlayer } from '../audio/player';
-import { stopAudioPlayback, setCurrentTime, setRecorderStatusContent } from './player';
-import { secondsToMinutesString } from '../audio/utils';
-import { setRecordedAudioDuration } from './audio-files';
-import { audioRecorder } from '../audio/recorder';
+import type { Writable } from 'svelte/store';
 
-export function setRecordedAudioSource(URL: string) {
-  recordedAudioSource.setRecordedAudioUrl(URL);
-  setupAudioElementListeners(recordedAudioSource._getAudioElement());
-  audioPlayer.setAudioSource(recordedAudioSource.createSource);
-}
+export const getStoreAttribute = <T>(store: Writable<T>, key: keyof T) => {
+  let value: any;
+  store.update(prevState => {
+    value = prevState[key];
+    return prevState;
+  });
+  return value;
+};
 
-function setupAudioElementListeners(audioElement: HTMLAudioElement) {
-  if (audioElement.onended === null) audioElement.onended = () => stopAudioPlayback();
-  if (audioElement.ontimeupdate === null) audioElement.ontimeupdate = () => setCurrentTime(audioElement.currentTime);
-  if (audioElement.onloadeddata === null) audioElement.onloadeddata = () => setValidAudioDuration(audioElement.duration);
-  if (audioElement.ondurationchange === null) audioElement.ondurationchange = audioElement.onloadeddata;
-}
-
-function setValidAudioDuration(duration: number) {
-  duration = (duration !== Infinity) ? duration : audioRecorder.getLastRecordingDuration();
-  setRecorderStatusContent(`Recorded audio duration: ${secondsToMinutesString(duration)}`);
-  setRecordedAudioDuration(duration);
-}
+export const toggleStoreAttribute = (store: Writable<{}>, key: string) => {
+  store.update(prevState => {
+    if (typeof prevState[key] !== 'boolean') throw Error;
+    prevState[key] = !prevState[key];
+    return prevState;
+  });
+};

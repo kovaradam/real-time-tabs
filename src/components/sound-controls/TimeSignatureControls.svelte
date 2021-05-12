@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { setTimeSignatureState, recorderSettings } from '../../stores/recorder-settings';
+  import { setTimeSignatureState, recorderStore } from '../../stores/recorder';
   import { setHelpContent } from '../../stores/help-content';
 </script>
 
@@ -18,12 +18,12 @@
 
 <input
   class="navbar-input"
-  bind:value={$recorderSettings.timeSignature.upper}
+  bind:value={$recorderStore.timeSignature.upper}
   on:keydown={e => setTimeSignatureState(e, 'upper')}
   on:mouseover={() => setHelpContent('Set number of beats per bar')} />
 <span>/</span>
 <input
   class="navbar-input"
-  bind:value={$recorderSettings.timeSignature.lower}
+  bind:value={$recorderStore.timeSignature.lower}
   on:keydown={e => setTimeSignatureState(e, 'lower')}
   on:mouseover={() => setHelpContent('Set length of a beat')} />

@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { isRecording, recorderStatusContent } from '../../stores/player';
   import { recordedAudioURL } from '../../stores/audio-files';
   import AudioTrack from './AudioTrack.svelte';
   import AudioStatusPanel from './AudioStatusPanel.svelte';
   import AudioFilePanel from './AudioFilePanel.svelte';
   import Icon from 'svelte-awesome';
   import { microphone } from 'svelte-awesome/icons';
+  import { recorderStatusContent } from '../../stores/recorder-content';
+  import { recorderStore } from '../../stores/recorder';
 
   $: isRecordedAudio = $recordedAudioURL !== '';
 </script>
@@ -81,12 +82,12 @@
   }
 </style>
 
-<section class="contents" class:is-recording={$isRecording}>
+<section class="contents" class:is-recording={$recorderStore.isRecording}>
   {#if isRecordedAudio}
     <AudioStatusPanel />
     <AudioFilePanel />
     <AudioTrack />
-  {:else if $isRecording}
+  {:else if $recorderStore.isRecording}
     <span class="anim-circle" />
     <span class="anim-circle delayed" />
     <span id="anim-icon" class="delayed">

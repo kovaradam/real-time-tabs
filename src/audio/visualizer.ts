@@ -4,10 +4,10 @@ export const config = { samples: 300, channel: 0, maxAmplitude: 100, minAmplitud
 
 async function visualizeAudio(url: string) {
   if (url === '') return '';
-  return fetch(url)
-    .then(response => response.arrayBuffer())
-    .then(arrayBuffer => AudioContext.audioContextInstance.decodeAudioData(arrayBuffer))
-    .then(audioBuffer => visualizeAsSVGpoints(audioBuffer));
+  const response = await fetch(url);
+  const arrayBuffer = await response.arrayBuffer();
+  const audioBuffer = await AudioContext.audioContextInstance.decodeAudioData(arrayBuffer);
+  return visualizeAsSVGpoints(audioBuffer);
 }
 
 export default visualizeAudio;
